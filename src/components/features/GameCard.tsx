@@ -21,12 +21,16 @@ export function GameCard({ game, index }: GameCardProps) {
     >
       <CardContent className="p-0">
         {/* Game Image */}
-        <div className="relative aspect-video overflow-hidden">
-          <img 
-            src={game.image} 
-            alt={game.title}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-          />
+        <div className="relative aspect-video overflow-hidden bg-muted">
+          {game.image ? (
+            <img 
+              src={game.image} 
+              alt={game.title}
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+          ) : (
+            <div className="h-full w-full bg-gradient-to-br from-muted to-card" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <div className="flex h-full items-center justify-center">
               <Button size="lg" className="gap-2 animate-fade-in">
