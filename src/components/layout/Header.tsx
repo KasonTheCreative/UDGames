@@ -1,0 +1,42 @@
+import { Search, Gamepad2 } from 'lucide-react';
+import { Input } from '../ui/input';
+
+interface HeaderProps {
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
+}
+
+export function Header({ searchQuery, onSearchChange }: HeaderProps) {
+  return (
+    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg">
+      <div className="container mx-auto flex items-center justify-between px-4 py-4">
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <div className="rounded-lg bg-gaming-gradient p-2">
+            <Gamepad2 className="h-6 w-6 text-primary-foreground" />
+          </div>
+          <span className="text-2xl font-bold gradient-text">UD-Games</span>
+        </div>
+
+        {/* Search Bar */}
+        <div className="relative w-full max-w-md">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            type="text"
+            placeholder="Search games..."
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+
+        {/* Navigation */}
+        <nav className="hidden md:flex items-center gap-6">
+          <a href="#" className="nav-link">Home</a>
+          <a href="#" className="nav-link">Popular</a>
+          <a href="#" className="nav-link">New</a>
+        </nav>
+      </div>
+    </header>
+  );
+}
