@@ -15,7 +15,7 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
           <div className="rounded-lg bg-gaming-gradient p-2">
             <Gamepad2 className="h-6 w-6 text-primary-foreground" />
           </div>
-          <span className="text-2xl font-bold gradient-text">UD-Games</span>
+          <span className="text-2xl font-bold gradient-text">UD-Math</span>
         </a>
 
         {/* Search Bar */}
