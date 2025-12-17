@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Header } from '../components/layout/Header';
 import { Music2, Radio, Headphones } from 'lucide-react';
 
@@ -34,6 +35,8 @@ const musicSites: MusicSite[] = [
 ];
 
 export function Music() {
+  const [selectedSite, setSelectedSite] = useState<MusicSite>(musicSites[0]);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -47,22 +50,37 @@ export function Music() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {musicSites.map((site, index) => {
             const Icon = site.icon;
+            const isSelected = selectedSite.id === site.id;
             return (
               <div
                 key={site.id}
-                className="animate-fade-in group cursor-pointer rounded-xl bg-card p-6 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                className={`animate-fade-in group cursor-pointer rounded-xl p-6 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl ${
+                  isSelected ? 'bg-primary text-primary-foreground' : 'bg-card'
+                }`}
                 style={{ animationDelay: `${index * 0.1}s` }}
-                onClick={() => window.open(site.url, '_blank')}
+                onClick={() => setSelectedSite(site)}
               >
                 <div className="mb-4 flex items-center gap-3">
-                  <div className="rounded-lg bg-primary/10 p-3">
-                    <Icon className="h-6 w-6 text-primary" />
+                  <div className={`rounded-lg p-3 ${
+                    isSelected ? 'bg-primary-foreground/20' : 'bg-primary/10'
+                  }`}>
+                    <Icon className={`h-6 w-6 ${
+                      isSelected ? 'text-primary-foreground' : 'text-primary'
+                    }`} />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground">{site.title}</h3>
+                  <h3 className={`text-xl font-bold ${
+                    isSelected ? 'text-primary-foreground' : 'text-foreground'
+                  }`}>{site.title}</h3>
                 </div>
-                <p className="text-muted-foreground">{site.description}</p>
-                <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span>Open Music Player</span>
+                <p className={isSelected ? 'text-primary-foreground/90' : 'text-muted-foreground'}>
+                  {site.description}
+                </p>
+                <div className={`mt-4 flex items-center gap-2 text-sm font-semibold ${
+                  isSelected 
+                    ? 'text-primary-foreground opacity-100' 
+                    : 'text-primary opacity-0 group-hover:opacity-100'
+                } transition-opacity duration-300`}>
+                  <span>{isSelected ? 'Now Playing' : 'Select Player'}</span>
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
@@ -72,16 +90,19 @@ export function Music() {
           })}
         </div>
 
-        {/* Featured Music Player */}
+        {/* Music Player */}
         <div className="mt-12">
-          <h2 className="mb-4 text-2xl font-bold text-foreground">Featured Player</h2>
+          <h2 className="mb-4 text-2xl font-bold text-foreground">
+            Now Playing: {selectedSite.title}
+          </h2>
           <div className="overflow-hidden rounded-xl bg-card shadow-xl">
             <iframe
-              src="https://music.youtube.com/"
+              key={selectedSite.id}
+              src={selectedSite.url}
               className="h-[600px] w-full"
               frameBorder="0"
               allow="autoplay; encrypted-media"
-              title="YouTube Music Player"
+              title={`${selectedSite.title} Player`}
             />
           </div>
         </div>
