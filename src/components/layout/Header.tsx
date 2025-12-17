@@ -36,6 +36,7 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
         <nav className="hidden md:flex items-center gap-6">
           <a href="/" className="nav-link">Games</a>
           <a href="/music" className="nav-link">Music</a>
+          <a href="/chat" className="nav-link">Chat Room</a>
         </nav>
       </div>
     </header>
