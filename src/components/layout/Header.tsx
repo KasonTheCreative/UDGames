@@ -1,5 +1,6 @@
 import { Search, Gamepad2 } from 'lucide-react';
 import { Input } from '../ui/input';
+import { OnlineCounter } from '../features/OnlineCounter';
 
 interface HeaderProps {
   searchQuery?: string;
@@ -33,7 +34,8 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
         )}
 
         {/* Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-4">
+          <OnlineCounter />
           <a href="/" className="nav-link">Games</a>
           <a href="/music" className="nav-link">Music</a>
           <a href="/chat" className="nav-link">Chat Room</a>
