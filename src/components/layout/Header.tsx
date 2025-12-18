@@ -37,6 +37,10 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
         <nav className="hidden md:flex items-center gap-3">
           <OnlineCounter />
           <a href="/" className="nav-link">Games</a>
+          <a href="/study" className="nav-link">Study</a>
+          <a href="/art" className="nav-link">Art</a>
+          <a href="/puzzles" className="nav-link">Puzzles</a>
+          <a href="/books" className="nav-link">Books</a>
           <a href="/tools" className="nav-link">Tools</a>
           <a href="/videos" className="nav-link">Videos</a>
           <a href="/apps" className="nav-link">Apps</a>

@@ -6,6 +6,10 @@ import { AIChat } from './pages/AIChat';
 import { Tools } from './pages/Tools';
 import { Videos } from './pages/Videos';
 import { Apps } from './pages/Apps';
+import { Study } from './pages/Study';
+import { Art } from './pages/Art';
+import { Puzzles } from './pages/Puzzles';
+import { Books } from './pages/Books';
 
 function App() {
   const path = window.location.pathname;
@@ -36,6 +40,22 @@ function App() {
   
   if (path === '/apps') {
     return <Apps />;
+  }
+  
+  if (path === '/study') {
+    return <Study />;
+  }
+  
+  if (path === '/art') {
+    return <Art />;
+  }
+  
+  if (path === '/puzzles') {
+    return <Puzzles />;
+  }
+  
+  if (path === '/books') {
+    return <Books />;
   }
   
   return <Home />;
