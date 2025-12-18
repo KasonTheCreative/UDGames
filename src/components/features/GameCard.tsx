@@ -10,7 +10,7 @@ interface GameCardProps {
 
 export function GameCard({ game, index }: GameCardProps) {
   const handlePlayClick = () => {
-    window.open(`/game/${game.id}`, '_blank');
+    window.location.href = `/game/${game.id}`;
   };
 
   return (
