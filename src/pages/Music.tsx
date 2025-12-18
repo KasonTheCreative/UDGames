@@ -13,20 +13,13 @@ interface MusicSite {
 const musicSites: MusicSite[] = [
   {
     id: '1',
-    title: 'YouTube Music',
-    description: 'Stream millions of songs and music videos',
-    url: 'https://music.youtube.com/',
-    icon: Music2
-  },
-  {
-    id: '2',
-    title: 'SoundCloud',
-    description: 'Discover new music and listen to trending tracks',
-    url: 'https://soundcloud.com/discover',
+    title: 'Audio.com',
+    description: 'Discover and stream trending audio content',
+    url: 'https://audio.com/feed',
     icon: Headphones
   },
   {
-    id: '3',
+    id: '2',
     title: 'Radio Garden',
     description: 'Listen to live radio stations from around the world',
     url: 'https://radio.garden/',
