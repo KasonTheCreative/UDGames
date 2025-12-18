@@ -34,11 +34,14 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
         )}
 
         {/* Navigation */}
-        <nav className="hidden md:flex items-center gap-4">
+        <nav className="hidden md:flex items-center gap-3">
           <OnlineCounter />
           <a href="/" className="nav-link">Games</a>
+          <a href="/tools" className="nav-link">Tools</a>
+          <a href="/videos" className="nav-link">Videos</a>
+          <a href="/apps" className="nav-link">Apps</a>
           <a href="/music" className="nav-link">Music</a>
-          <a href="/chat" className="nav-link">Chat Room</a>
+          <a href="/chat" className="nav-link">Chat</a>
           <a href="/ai" className="nav-link">AI</a>
         </nav>
       </div>
