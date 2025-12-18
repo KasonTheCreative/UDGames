@@ -14,6 +14,9 @@ const getSessionId = () => {
 export function useOnlineUsers() {
   const [onlineCount, setOnlineCount] = useState<number>(0);
   const sessionId = getSessionId();
+  
+  // Add a base count to always show at least 10+ users
+  const BASE_USER_COUNT = Math.floor(Math.random() * 6) + 10; // Random 10-15 base users
 
   useEffect(() => {
     let heartbeatInterval: NodeJS.Timeout;
@@ -64,7 +67,8 @@ export function useOnlineUsers() {
         if (error) {
           console.error('Error fetching online count:', error);
         } else {
-          setOnlineCount(count || 0);
+          // Add base count to actual count for display
+          setOnlineCount((count || 0) + BASE_USER_COUNT);
         }
       } catch (error) {
         console.error('Error in fetchOnlineCount:', error);
