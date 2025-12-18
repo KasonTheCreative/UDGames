@@ -485,4 +485,24 @@ export const games = [
     plays: '1.5M',
     url: 'https://lebro29.github.io/gn/'
   },
+  {
+    id: '49',
+    title: 'Online Games',
+    description: 'Embeddable games for websites - vast collection of free online games.',
+    image: '',
+    category: 'websites',
+    rating: 4.6,
+    plays: '4M',
+    url: 'https://www.onlinegames.io/t/embeddable-games-for-websites/'
+  },
+  {
+    id: '50',
+    title: 'Game Snacks',
+    description: 'Quick and fun bite-sized games that load instantly.',
+    image: '',
+    category: 'websites',
+    rating: 4.7,
+    plays: '6M',
+    url: 'https://gamesnacks.com/'
+  },
 ];
