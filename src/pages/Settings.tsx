@@ -1,16 +1,40 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from '../components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Settings as SettingsIcon, Trash2, Info, Shield, Palette, Moon, Sun } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import { supabase } from '../lib/supabase';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
+import { 
+  themes, 
+  applyTheme, 
+  getActiveTheme, 
+  type ThemeColor 
+} from '../lib/themes';
 
 export function Settings() {
   const [theme, setTheme] = useState<'light' | 'dark'>(
     document.documentElement.classList.contains('dark') ? 'dark' : 'light'
   );
+  const [colorTheme, setColorTheme] = useState<ThemeColor>(
+    (localStorage.getItem('colorTheme') as ThemeColor) || 'default'
+  );
   const { toast } = useToast();
+
+  // Check for active holiday theme
+  const { isHoliday, holidayName } = getActiveTheme();
+
+  useEffect(() => {
+    // Initialize theme on component mount
+    applyTheme();
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -27,6 +51,16 @@ export function Settings() {
     toast({
       title: 'Theme Updated',
       description: `Switched to ${newTheme} mode`,
+    });
+  };
+
+  const handleColorThemeChange = (value: ThemeColor) => {
+    setColorTheme(value);
+    applyTheme(value);
+    
+    toast({
+      title: 'Color Theme Changed',
+      description: `Applied ${themes[value].name} theme`,
     });
   };
 
@@ -69,6 +103,8 @@ export function Settings() {
     localStorage.clear();
     document.documentElement.classList.remove('dark');
     setTheme('light');
+    setColorTheme('default');
+    applyTheme('default');
     
     toast({
       title: 'Settings Reset',
@@ -90,6 +126,11 @@ export function Settings() {
           <p className="text-muted-foreground">
             Customize your experience and manage preferences
           </p>
+          {isHoliday && (
+            <p className="mt-2 text-sm font-semibold text-primary">
+              🎉 {holidayName} theme is currently active!
+            </p>
+          )}
         </div>
 
         <div className="mx-auto max-w-4xl space-y-6">
@@ -104,7 +145,8 @@ export function Settings() {
                 Customize how the site looks
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
+              {/* Light/Dark Mode */}
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-semibold">Theme</h3>
@@ -130,6 +172,53 @@ export function Settings() {
                     </>
                   )}
                 </Button>
+              </div>
+
+              {/* Color Theme */}
+              <div className="flex items-center justify-between border-t pt-6">
+                <div>
+                  <h3 className="font-semibold">Color Theme</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Choose your favorite color scheme
+                    {isHoliday && (
+                      <span className="block text-xs text-primary mt-1">
+                        Holiday theme active - will return to your choice after the holiday
+                      </span>
+                    )}
+                  </p>
+                </div>
+                <Select value={colorTheme} onValueChange={handleColorThemeChange}>
+                  <SelectTrigger className="w-[200px]">
+                    <SelectValue placeholder="Select theme" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="default">🎮 Gaming Default</SelectItem>
+                    <SelectItem value="ocean">🌊 Ocean Blue</SelectItem>
+                    <SelectItem value="forest">🌲 Forest Green</SelectItem>
+                    <SelectItem value="sunset">🌅 Sunset Orange</SelectItem>
+                    <SelectItem value="purple">💜 Purple Dreams</SelectItem>
+                    <SelectItem value="sigma67">😎 67 Ohio Sigma</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Color Preview */}
+              <div className="rounded-lg border p-4 space-y-3">
+                <h4 className="text-sm font-semibold mb-3">Theme Preview</h4>
+                <div className="flex gap-2">
+                  <div className="flex-1 h-12 rounded bg-primary flex items-center justify-center text-primary-foreground text-xs font-semibold">
+                    Primary
+                  </div>
+                  <div className="flex-1 h-12 rounded bg-secondary flex items-center justify-center text-secondary-foreground text-xs font-semibold">
+                    Secondary
+                  </div>
+                  <div className="flex-1 h-12 rounded bg-accent flex items-center justify-center text-accent-foreground text-xs font-semibold">
+                    Accent
+                  </div>
+                </div>
+                <div className="gradient-text text-xl font-bold text-center py-2">
+                  Gradient Text Effect
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -207,6 +296,7 @@ export function Settings() {
                   <p>• Productivity tools and apps</p>
                   <p>• Art and drawing tools</p>
                   <p>• Puzzles and brain games</p>
+                  <p>• Automatic holiday themes (Christmas, Halloween, etc.)</p>
                 </div>
               </div>
               

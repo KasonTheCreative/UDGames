@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Home } from './pages/Home';
 import { GamePlayer } from './pages/GamePlayer';
 import { Music } from './pages/Music';
@@ -8,8 +9,14 @@ import { Apps } from './pages/Apps';
 import { Art } from './pages/Art';
 import { Puzzles } from './pages/Puzzles';
 import { Settings } from './pages/Settings';
+import { initializeTheme } from './lib/themes';
 
 function App() {
+  // Initialize theme on app load
+  useEffect(() => {
+    initializeTheme();
+  }, []);
+
   const path = window.location.pathname;
   
   if (path.startsWith('/game/')) {
