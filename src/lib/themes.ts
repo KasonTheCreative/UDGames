@@ -175,7 +175,7 @@ export function getCurrentHoliday(): HolidayTheme {
   return null;
 }
 
-export function getActiveTheme(): { theme: Theme; isHoliday: boolean; holidayName?: string } {
+export function getActiveTheme(): { theme: Theme; isHoliday: boolean; holidayName?: string; themeColor?: ThemeColor } {
   const holiday = getCurrentHoliday();
   
   if (holiday) {
@@ -186,10 +186,11 @@ export function getActiveTheme(): { theme: Theme; isHoliday: boolean; holidayNam
     };
   }
 
-  const savedTheme = localStorage.getItem('colorTheme') as ThemeColor || 'default';
+  const savedTheme = sessionStorage.getItem('colorTheme') as ThemeColor || 'default';
   return {
     theme: themes[savedTheme],
-    isHoliday: false
+    isHoliday: false,
+    themeColor: savedTheme
   };
 }
 
@@ -205,14 +206,21 @@ export function applyTheme(themeColor: ThemeColor | null = null) {
     root.style.setProperty(`--${cssVar}`, value);
   });
 
-  // Save theme preference (only if not a holiday)
+  // Remove or add sigma67 class
+  if (themeColor === 'sigma67') {
+    root.classList.add('sigma67-theme');
+  } else {
+    root.classList.remove('sigma67-theme');
+  }
+
+  // Save theme preference to sessionStorage (resets on page close)
   if (themeColor && !isHoliday) {
-    localStorage.setItem('colorTheme', themeColor);
+    sessionStorage.setItem('colorTheme', themeColor);
   }
 }
 
 export function initializeTheme() {
-  // Check if dark mode is enabled
+  // Check if dark mode is enabled (keep dark mode in localStorage)
   const isDark = localStorage.getItem('theme') === 'dark' || 
     (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
   
@@ -220,6 +228,14 @@ export function initializeTheme() {
     document.documentElement.classList.add('dark');
   }
 
-  // Apply color theme (holiday or user preference)
+  // Apply color theme (holiday or user preference from sessionStorage)
   applyTheme();
+}
+
+export function getCurrentThemeColor(): ThemeColor {
+  const { isHoliday, themeColor } = getActiveTheme();
+  if (isHoliday) {
+    return sessionStorage.getItem('colorTheme') as ThemeColor || 'default';
+  }
+  return themeColor || 'default';
 }

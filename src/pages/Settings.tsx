@@ -15,7 +15,8 @@ import {
 import { 
   themes, 
   applyTheme, 
-  getActiveTheme, 
+  getActiveTheme,
+  getCurrentThemeColor,
   type ThemeColor 
 } from '../lib/themes';
 
@@ -24,7 +25,7 @@ export function Settings() {
     document.documentElement.classList.contains('dark') ? 'dark' : 'light'
   );
   const [colorTheme, setColorTheme] = useState<ThemeColor>(
-    (localStorage.getItem('colorTheme') as ThemeColor) || 'default'
+    getCurrentThemeColor()
   );
   const { toast } = useToast();
 
