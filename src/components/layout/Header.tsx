@@ -1,7 +1,6 @@
 import { Search, Gamepad2, Settings } from 'lucide-react';
 import { Input } from '../ui/input';
 import { OnlineCounter } from '../features/OnlineCounter';
-import { getCurrentHoliday } from '../../lib/themes';
 
 interface HeaderProps {
   searchQuery?: string;
@@ -9,8 +8,6 @@ interface HeaderProps {
 }
 
 export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
-  const isChristmas = getCurrentHoliday() === 'christmas';
-  
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
@@ -20,19 +17,6 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
             <Gamepad2 className="h-6 w-6 text-primary-foreground" />
           </div>
           <span className="text-2xl font-bold gradient-text relative">
-            {isChristmas && (
-              <img 
-                src="https://cdn-ai.onspace.ai/onspace/files/Cyvf8ac6pjD47L2jhEPje4/Untitled_Design_-_1_-_Edited.png"
-                alt="Santa Hat"
-                className="absolute w-8 h-8 object-contain animate-swing"
-                style={{ 
-                  top: '-20px',
-                  left: '-2px',
-                  transform: 'rotate(-25deg)',
-                  transformOrigin: 'top left'
-                }}
-              />
-            )}
             UD-Math
           </span>
         </a>
