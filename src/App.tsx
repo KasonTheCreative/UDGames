@@ -4,12 +4,10 @@ import { Music } from './pages/Music';
 import { ChatRoom } from './pages/ChatRoom';
 import { AIChat } from './pages/AIChat';
 import { Tools } from './pages/Tools';
-import { Videos } from './pages/Videos';
 import { Apps } from './pages/Apps';
-import { Study } from './pages/Study';
 import { Art } from './pages/Art';
 import { Puzzles } from './pages/Puzzles';
-import { Books } from './pages/Books';
+import { Settings } from './pages/Settings';
 
 function App() {
   const path = window.location.pathname;
@@ -34,16 +32,8 @@ function App() {
     return <Tools />;
   }
   
-  if (path === '/videos') {
-    return <Videos />;
-  }
-  
   if (path === '/apps') {
     return <Apps />;
-  }
-  
-  if (path === '/study') {
-    return <Study />;
   }
   
   if (path === '/art') {
@@ -54,8 +44,8 @@ function App() {
     return <Puzzles />;
   }
   
-  if (path === '/books') {
-    return <Books />;
+  if (path === '/settings') {
+    return <Settings />;
   }
   
   return <Home />;
