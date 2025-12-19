@@ -16,18 +16,25 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2 relative">
-          {isChristmas && (
-            <img 
-              src="https://cdn-ai.onspace.ai/onspace/files/Cyvf8ac6pjD47L2jhEPje4/Untitled_Design_-_1_-_Edited.png"
-              alt="Santa Hat"
-              className="absolute -top-3 -left-8 w-12 h-12 object-contain animate-swing"
-              style={{ transform: 'rotate(-15deg) scaleX(-1)' }}
-            />
-          )}
           <div className="rounded-lg bg-gaming-gradient p-2">
             <Gamepad2 className="h-6 w-6 text-primary-foreground" />
           </div>
-          <span className="text-2xl font-bold gradient-text">UD-Math</span>
+          <span className="text-2xl font-bold gradient-text relative">
+            {isChristmas && (
+              <img 
+                src="https://cdn-ai.onspace.ai/onspace/files/Cyvf8ac6pjD47L2jhEPje4/Untitled_Design_-_1_-_Edited.png"
+                alt="Santa Hat"
+                className="absolute w-8 h-8 object-contain animate-swing"
+                style={{ 
+                  top: '-20px',
+                  left: '-2px',
+                  transform: 'rotate(-25deg)',
+                  transformOrigin: 'top left'
+                }}
+              />
+            )}
+            UD-Math
+          </span>
         </a>
 
         {/* Search Bar */}
