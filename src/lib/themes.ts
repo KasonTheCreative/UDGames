@@ -88,12 +88,12 @@ export const holidayThemes: Record<Exclude<HolidayTheme, null>, Theme> = {
   christmas: {
     name: 'Christmas',
     colors: {
-      primary: '0 72% 51%',
+      primary: '0 84% 60%',
       primaryForeground: '0 0% 100%',
-      secondary: '142 71% 45%',
-      accent: '43 96% 56%',
-      background: '0 15% 10%',
-      foreground: '0 0% 95%',
+      secondary: '142 76% 36%',
+      accent: '0 72% 51%',
+      background: '140 20% 8%',
+      foreground: '0 0% 98%',
     }
   },
   newyears: {
