@@ -1,7 +1,6 @@
-// Theme system with holiday detection
+// Theme system
 
 export type ThemeColor = 'default' | 'ocean' | 'forest' | 'sunset' | 'purple' | 'sigma67';
-export type HolidayTheme = 'christmas' | 'newyears' | 'thanksgiving' | 'july4th' | 'halloween' | null;
 
 export interface Theme {
   name: string;
@@ -84,121 +83,16 @@ export const themes: Record<ThemeColor, Theme> = {
   }
 };
 
-export const holidayThemes: Record<Exclude<HolidayTheme, null>, Theme> = {
-  christmas: {
-    name: 'Christmas',
-    colors: {
-      primary: '0 84% 60%',
-      primaryForeground: '0 0% 100%',
-      secondary: '142 76% 36%',
-      accent: '0 72% 51%',
-      background: '140 20% 8%',
-      foreground: '0 0% 98%',
-    }
-  },
-  newyears: {
-    name: 'New Years',
-    colors: {
-      primary: '43 96% 56%',
-      primaryForeground: '0 0% 10%',
-      secondary: '0 0% 75%',
-      accent: '280 100% 70%',
-      background: '240 10% 8%',
-      foreground: '0 0% 95%',
-    }
-  },
-  thanksgiving: {
-    name: 'Thanksgiving',
-    colors: {
-      primary: '25 95% 53%',
-      primaryForeground: '0 0% 100%',
-      secondary: '30 67% 45%',
-      accent: '45 93% 47%',
-      background: '30 15% 10%',
-      foreground: '40 10% 95%',
-    }
-  },
-  july4th: {
-    name: '4th of July',
-    colors: {
-      primary: '0 72% 51%',
-      primaryForeground: '0 0% 100%',
-      secondary: '221 83% 53%',
-      accent: '0 0% 100%',
-      background: '220 15% 10%',
-      foreground: '0 0% 95%',
-    }
-  },
-  halloween: {
-    name: 'Halloween',
-    colors: {
-      primary: '24 100% 50%',
-      primaryForeground: '0 0% 0%',
-      secondary: '280 100% 25%',
-      accent: '290 84% 60%',
-      background: '0 0% 5%',
-      foreground: '30 100% 85%',
-    }
-  }
-};
 
-export function getCurrentHoliday(): HolidayTheme {
-  const now = new Date();
-  const month = now.getMonth() + 1; // 1-12
-  const day = now.getDate();
 
-  // October - Halloween
-  if (month === 10) {
-    return 'halloween';
-  }
-
-  // November - Thanksgiving
-  if (month === 11) {
-    return 'thanksgiving';
-  }
-
-  // December 1-25 - Christmas
-  if (month === 12 && day <= 25) {
-    return 'christmas';
-  }
-
-  // December 26 - January 1 - New Years
-  if ((month === 12 && day > 25) || (month === 1 && day === 1)) {
-    return 'newyears';
-  }
-
-  // July - 4th of July
-  if (month === 7) {
-    return 'july4th';
-  }
-
-  return null;
-}
-
-export function getActiveTheme(): { theme: Theme; isHoliday: boolean; holidayName?: string; themeColor?: ThemeColor } {
-  const holiday = getCurrentHoliday();
-  
-  if (holiday) {
-    return {
-      theme: holidayThemes[holiday],
-      isHoliday: true,
-      holidayName: holidayThemes[holiday].name
-    };
-  }
-
+export function getActiveTheme(): Theme {
   const savedTheme = sessionStorage.getItem('colorTheme') as ThemeColor || 'default';
-  return {
-    theme: themes[savedTheme],
-    isHoliday: false,
-    themeColor: savedTheme
-  };
+  return themes[savedTheme];
 }
 
 export function applyTheme(themeColor: ThemeColor | null = null) {
   const root = document.documentElement;
-  const { theme, isHoliday } = themeColor ? 
-    { theme: themes[themeColor], isHoliday: false } : 
-    getActiveTheme();
+  const theme = themeColor ? themes[themeColor] : getActiveTheme();
 
   // Apply theme colors
   Object.entries(theme.colors).forEach(([key, value]) => {
@@ -214,7 +108,7 @@ export function applyTheme(themeColor: ThemeColor | null = null) {
   }
 
   // Save theme preference to sessionStorage (resets on page close)
-  if (themeColor && !isHoliday) {
+  if (themeColor) {
     sessionStorage.setItem('colorTheme', themeColor);
   }
 }
@@ -228,14 +122,10 @@ export function initializeTheme() {
     document.documentElement.classList.add('dark');
   }
 
-  // Apply color theme (holiday or user preference from sessionStorage)
+  // Apply color theme from sessionStorage
   applyTheme();
 }
 
 export function getCurrentThemeColor(): ThemeColor {
-  const { isHoliday, themeColor } = getActiveTheme();
-  if (isHoliday) {
-    return sessionStorage.getItem('colorTheme') as ThemeColor || 'default';
-  }
-  return themeColor || 'default';
+  return sessionStorage.getItem('colorTheme') as ThemeColor || 'default';
 }

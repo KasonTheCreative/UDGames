@@ -68,23 +68,6 @@
     @apply w-full;
   }
 
-  /* Holiday theme effects */
-  .holiday-snow {
-    animation: snowfall 10s linear infinite;
-  }
-
-  .holiday-fireworks {
-    animation: fireworks 2s ease-out infinite;
-  }
-
-  .holiday-spooky {
-    animation: spooky-glow 3s ease-in-out infinite;
-  }
-
-  .animate-swing {
-    animation: swing 2s ease-in-out infinite;
-  }
-
   /* 67 Sigma Theme Decorations */
   .sigma67-theme::before {
     content: '';
@@ -149,28 +132,6 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--accent));
-}
-
-/* Holiday animations */
-@keyframes snowfall {
-  0% { transform: translateY(-10px) translateX(0); opacity: 0.8; }
-  100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
-}
-
-@keyframes fireworks {
-  0% { opacity: 1; transform: scale(0) rotate(0deg); }
-  50% { opacity: 1; }
-  100% { opacity: 0; transform: scale(1.5) rotate(360deg); }
-}
-
-@keyframes spooky-glow {
-  0%, 100% { filter: drop-shadow(0 0 5px hsl(var(--primary))); }
-  50% { filter: drop-shadow(0 0 20px hsl(var(--accent))); }
-}
-
-@keyframes swing {
-  0%, 100% { transform: rotate(-15deg); }
-  50% { transform: rotate(-5deg); }
 }
 
 @keyframes float-67 {

@@ -14,8 +14,7 @@ import {
 } from '../components/ui/select';
 import { 
   themes, 
-  applyTheme, 
-  getActiveTheme,
+  applyTheme,
   getCurrentThemeColor,
   type ThemeColor 
 } from '../lib/themes';
@@ -28,9 +27,6 @@ export function Settings() {
     getCurrentThemeColor()
   );
   const { toast } = useToast();
-
-  // Check for active holiday theme
-  const { isHoliday, holidayName } = getActiveTheme();
 
   useEffect(() => {
     // Initialize theme on component mount
@@ -127,11 +123,6 @@ export function Settings() {
           <p className="text-muted-foreground">
             Customize your experience and manage preferences
           </p>
-          {isHoliday && (
-            <p className="mt-2 text-sm font-semibold text-primary">
-              🎉 {holidayName} theme is currently active!
-            </p>
-          )}
         </div>
 
         <div className="mx-auto max-w-4xl space-y-6">
@@ -181,11 +172,6 @@ export function Settings() {
                   <h3 className="font-semibold">Color Theme</h3>
                   <p className="text-sm text-muted-foreground">
                     Choose your favorite color scheme
-                    {isHoliday && (
-                      <span className="block text-xs text-primary mt-1">
-                        Holiday theme active - will return to your choice after the holiday
-                      </span>
-                    )}
                   </p>
                 </div>
                 <Select value={colorTheme} onValueChange={handleColorThemeChange}>
@@ -297,7 +283,6 @@ export function Settings() {
                   <p>• Productivity tools and apps</p>
                   <p>• Art and drawing tools</p>
                   <p>• Puzzles and brain games</p>
-                  <p>• Automatic holiday themes (Christmas, Halloween, etc.)</p>
                 </div>
               </div>
               
