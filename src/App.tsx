@@ -9,7 +9,7 @@ import { Apps } from './pages/Apps';
 import { Art } from './pages/Art';
 import { Puzzles } from './pages/Puzzles';
 import { Settings } from './pages/Settings';
-import { Boom } from './pages/Boom';
+
 import { initializeTheme } from './lib/themes';
 
 function App() {
@@ -135,14 +135,6 @@ function App() {
     );
   }
   
-  if (path === '/boom') {
-    return (
-      <>
-        <Boom />
-        {sigma67Decoration}
-      </>
-    );
-  }
   
   return (
     <>

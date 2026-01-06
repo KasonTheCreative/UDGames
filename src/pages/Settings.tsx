@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Header } from '../components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
 import { Button } from '../components/ui/button';
-import { Settings as SettingsIcon, Trash2, Info, Shield, Palette, Moon, Sun } from 'lucide-react';
+import { Settings as SettingsIcon, Trash2, Info, Shield, Palette, Moon, Sun, Download } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import { supabase } from '../lib/supabase';
 import { 
@@ -111,6 +111,114 @@ export function Settings() {
     setTimeout(() => {
       window.location.href = '/';
     }, 1000);
+  };
+
+  const downloadSite = () => {
+    // Create HTML content with inline styles
+    const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UD-Math - Saved Copy</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0a0a0a;
+      color: #f5f5f5;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      background: linear-gradient(to right, #a855f7, #ec4899, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .info {
+      background: #1a1a1a;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+      border-left: 4px solid #a855f7;
+    }
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>UD-Math Backup</h1>
+    <div class="info">
+      <h2>🎮 Site Information</h2>
+      <p><strong>Original URL:</strong> ${window.location.origin}</p>
+      <p><strong>Saved Date:</strong> ${new Date().toLocaleString()}</p>
+      <p><strong>Status:</strong> This is an offline backup of UD-Math</p>
+    </div>
+    
+    <div class="info">
+      <h2>📌 Important Links</h2>
+      <ul>
+        <li><a href="${window.location.origin}">Home</a></li>
+        <li><a href="${window.location.origin}/music">Music</a></li>
+        <li><a href="${window.location.origin}/chat">Chat Room</a></li>
+        <li><a href="${window.location.origin}/ai">AI Assistant</a></li>
+        <li><a href="${window.location.origin}/tools">Tools</a></li>
+        <li><a href="${window.location.origin}/apps">Apps</a></li>
+        <li><a href="${window.location.origin}/art">Art</a></li>
+        <li><a href="${window.location.origin}/puzzles">Puzzles</a></li>
+      </ul>
+    </div>
+    
+    <div class="info">
+      <h2>💡 How to Access</h2>
+      <p>To access the full site, visit: <a href="${window.location.origin}">${window.location.origin}</a></p>
+      <p>If the site is down, you can use this backup file as a reference for the URL and features.</p>
+    </div>
+    
+    <div class="info">
+      <h2>✨ Features</h2>
+      <ul>
+        <li>🎮 Games Library - Multiple categories and embedded games</li>
+        <li>🤖 AI Chat Assistant - Powered by OnSpace AI</li>
+        <li>💬 Real-time Chat Room - Resets daily at midnight</li>
+        <li>🎵 Music Streaming - Multiple music platforms</li>
+        <li>🛠️ Productivity Tools - Calculators, converters, and more</li>
+        <li>📱 Web Apps - Google Docs, Canva, and other apps</li>
+        <li>🎨 Art Tools - Drawing and creative tools</li>
+        <li>🧩 Puzzles - Brain games and challenges</li>
+        <li>🎨 Customizable Themes - 6 color themes to choose from</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    // Create blob and download
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `UD-Math-Backup-${new Date().toISOString().split('T')[0]}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: 'Download Started',
+      description: 'Backup file is being downloaded',
+    });
   };
 
   return (
@@ -258,8 +366,47 @@ export function Settings() {
             </CardContent>
           </Card>
 
-          {/* About */}
+          {/* Backup & Download */}
           <Card className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Download className="h-5 w-5" />
+                Backup & Download
+              </CardTitle>
+              <CardDescription>
+                Save a copy of this site in case it gets taken down
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="rounded-lg bg-muted p-4">
+                <h3 className="mb-2 font-semibold">Download Backup File</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Download an HTML file with site information and links. Keep this file safe so you can access the site info if it ever goes down.
+                </p>
+                <Button
+                  onClick={downloadSite}
+                  className="w-full gap-2"
+                  variant="default"
+                >
+                  <Download className="h-4 w-4" />
+                  Download Backup
+                </Button>
+              </div>
+              
+              <div className="rounded-lg border p-4">
+                <h4 className="mb-2 font-semibold text-sm">💡 What's Included</h4>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  <li>✓ Site URL and access information</li>
+                  <li>✓ List of all features and pages</li>
+                  <li>✓ Important links and navigation</li>
+                  <li>✓ Timestamp of when backup was created</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* About */}
+          <Card className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Info className="h-5 w-5" />
