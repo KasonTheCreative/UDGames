@@ -3,7 +3,7 @@ import { Header } from '../components/layout/Header';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent } from '../components/ui/card';
-import { Send, MessageCircle, Users } from 'lucide-react';
+import { Send, MessageCircle, Users, Clock } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -24,7 +24,9 @@ export function ChatRoom() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [timeUntilReset, setTimeUntilReset] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const lastResetCheckRef = useRef<string>('');
 
   // Auto-scroll to bottom when new messages arrive
   const scrollToBottom = () => {
@@ -34,6 +36,53 @@ export function ChatRoom() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Calculate time until midnight and update countdown
+  useEffect(() => {
+    const updateCountdown = () => {
+      const now = new Date();
+      const midnight = new Date();
+      midnight.setHours(24, 0, 0, 0);
+      
+      const diff = midnight.getTime() - now.getTime();
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      setTimeUntilReset(`${hours}h ${minutes}m ${seconds}s`);
+      
+      // Check if it's midnight (reset time)
+      const currentDate = now.toDateString();
+      if (now.getHours() === 0 && now.getMinutes() === 0 && lastResetCheckRef.current !== currentDate) {
+        lastResetCheckRef.current = currentDate;
+        clearChatMessages();
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Function to clear all chat messages
+  const clearChatMessages = async () => {
+    try {
+      const { error } = await supabase
+        .from('messages')
+        .delete()
+        .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all messages
+      
+      if (error) {
+        console.error('Error clearing messages:', error);
+      } else {
+        setMessages([]);
+        console.log('Chat reset at midnight');
+      }
+    } catch (err) {
+      console.error('Failed to clear messages:', err);
+    }
+  };
 
   // Load messages using polling (every 2 seconds)
   useEffect(() => {
@@ -168,12 +217,21 @@ export function ChatRoom() {
             <h1 className="text-3xl font-bold text-foreground">Chat Room</h1>
             <p className="text-muted-foreground">Chatting as <span className="font-semibold text-primary">{username}</span></p>
           </div>
-          <Button 
-            variant="outline" 
-            onClick={() => setHasJoined(false)}
-          >
-            Change Name
-          </Button>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2">
+              <Clock className="h-4 w-4 text-muted-foreground" />
+              <div className="text-sm">
+                <div className="text-xs text-muted-foreground">Reset in</div>
+                <div className="font-mono font-semibold text-foreground">{timeUntilReset}</div>
+              </div>
+            </div>
+            <Button 
+              variant="outline" 
+              onClick={() => setHasJoined(false)}
+            >
+              Change Name
+            </Button>
+          </div>
         </div>
 
         <Card className="mx-auto h-[calc(100vh-250px)] max-w-4xl">
