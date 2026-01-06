@@ -5,9 +5,6 @@ import { Music } from './pages/Music';
 import { ChatRoom } from './pages/ChatRoom';
 import { AIChat } from './pages/AIChat';
 import { Tools } from './pages/Tools';
-import { Apps } from './pages/Apps';
-import { Art } from './pages/Art';
-import { Puzzles } from './pages/Puzzles';
 import { Settings } from './pages/Settings';
 
 import { initializeTheme } from './lib/themes';
@@ -94,33 +91,6 @@ function App() {
     return (
       <>
         <Tools />
-        {sigma67Decoration}
-      </>
-    );
-  }
-  
-  if (path === '/apps') {
-    return (
-      <>
-        <Apps />
-        {sigma67Decoration}
-      </>
-    );
-  }
-  
-  if (path === '/art') {
-    return (
-      <>
-        <Art />
-        {sigma67Decoration}
-      </>
-    );
-  }
-  
-  if (path === '/puzzles') {
-    return (
-      <>
-        <Puzzles />
         {sigma67Decoration}
       </>
     );

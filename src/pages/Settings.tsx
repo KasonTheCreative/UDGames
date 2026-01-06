@@ -242,7 +242,7 @@ export function Settings() {
                 Appearance
               </CardTitle>
               <CardDescription>
-                Customize how the site looks
+                Customize your visual experience
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -287,11 +287,11 @@ export function Settings() {
                     <SelectValue placeholder="Select theme" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="default">🎮 Gaming Default</SelectItem>
-                    <SelectItem value="ocean">🌊 Ocean Blue</SelectItem>
-                    <SelectItem value="forest">🌲 Forest Green</SelectItem>
-                    <SelectItem value="sunset">🌅 Sunset Orange</SelectItem>
-                    <SelectItem value="purple">💜 Purple Dreams</SelectItem>
+                    <SelectItem value="default">🌀 Cyber Neon</SelectItem>
+                    <SelectItem value="ocean">🌊 Deep Ocean</SelectItem>
+                    <SelectItem value="forest">🌲 Emerald Forest</SelectItem>
+                    <SelectItem value="sunset">🌅 Solar Sunset</SelectItem>
+                    <SelectItem value="purple">💜 Nebula Purple</SelectItem>
                     <SelectItem value="sigma67">😎 67 Ohio Sigma</SelectItem>
                   </SelectContent>
                 </Select>
