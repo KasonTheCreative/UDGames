@@ -418,7 +418,7 @@ export function Settings() {
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="rounded-lg bg-muted p-4">
-                <h3 className="mb-2 font-semibold">UD-Math</h3>
+                <h3 className="mb-2 font-semibold">UD-Games</h3>
                 <p className="text-sm text-muted-foreground">
                   A comprehensive platform featuring games, tools, chat, AI assistance, and more.
                 </p>
@@ -427,16 +427,20 @@ export function Settings() {
                   <p>• AI-powered chatbot assistant</p>
                   <p>• Real-time chat room</p>
                   <p>• Music streaming services</p>
-                  <p>• Productivity tools and apps</p>
-                  <p>• Art and drawing tools</p>
-                  <p>• Puzzles and brain games</p>
+                  <p>• Productivity tools</p>
                 </div>
               </div>
               
               <div className="rounded-lg border p-4">
-                <h4 className="mb-2 font-semibold text-sm">Creator</h4>
+                <h4 className="mb-2 font-semibold text-sm">Special Thanks</h4>
                 <p className="text-xs text-muted-foreground">
-                  Built by Kason with OnSpace AI
+                  Built with OnSpace AI
+                </p>
+              </div>
+              
+              <div className="rounded-lg bg-muted/50 border border-primary/20 p-3 text-center">
+                <p className="text-sm text-muted-foreground italic">
+                  luka is emo
                 </p>
               </div>
             </CardContent>

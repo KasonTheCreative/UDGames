@@ -100,7 +100,7 @@ export function Home() {
             <a href="/ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors">AI</a>
           </div>
           <p className="text-sm text-muted-foreground">
-            &copy; 2025 UD-Games. Play responsibly. Made with ⚡ by Kason
+            &copy; 2025 UD-Games. Play responsibly. Made with ⚡
           </p>
         </div>
       </footer>

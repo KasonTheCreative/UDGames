@@ -15,8 +15,12 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
         <a href="/" className="flex items-center gap-3 group relative">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
-            <div className="relative rounded-xl bg-gradient-to-br from-cyan-500 via-purple-500 to-pink-500 p-2.5">
-              <Zap className="h-6 w-6 text-white" />
+            <div className="relative rounded-xl bg-gradient-to-br from-cyan-500 via-purple-500 to-pink-500 p-1 overflow-hidden">
+              <img 
+                src="https://cdn-ai.onspace.ai/onspace/files/w67u4hHkw62YqgStmyvVqG/Screenshot_2026-01-06_144324.png" 
+                alt="UD-Games" 
+                className="h-10 w-10 object-cover rounded-lg"
+              />
             </div>
           </div>
           <div className="flex flex-col">

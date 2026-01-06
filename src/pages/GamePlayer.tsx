@@ -65,17 +65,44 @@ export function GamePlayer() {
   // Loading screen
   if (isLoading) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background">
-        <div className="text-center space-y-6 max-w-md px-4">
-          <Loader2 className="h-16 w-16 animate-spin text-primary mx-auto" />
-          <div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">Loading {game.title}...</h2>
-            <p className="text-lg text-muted-foreground italic">"{loadingPrompt}"</p>
-          </div>
-          <div className="w-full max-w-xs mx-auto">
-            <div className="h-2 bg-muted rounded-full overflow-hidden">
-              <div className="h-full bg-primary animate-pulse rounded-full" style={{ width: '100%' }} />
+      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl floating"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }}></div>
+        </div>
+        
+        <div className="relative z-10 text-center space-y-8 max-w-lg px-6">
+          {/* Loading Icon */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+            <div className="relative bg-card/60 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl">
+              <Loader2 className="h-20 w-20 animate-spin text-primary mx-auto" strokeWidth={2.5} />
             </div>
+          </div>
+          
+          {/* Game Title */}
+          <div className="glass-card p-6">
+            <h2 className="text-3xl font-black gradient-text mb-3">Loading {game.title}</h2>
+            <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent mb-4"></div>
+            <p className="text-base text-muted-foreground italic leading-relaxed px-4">
+              "{loadingPrompt}"
+            </p>
+          </div>
+          
+          {/* Progress Bar */}
+          <div className="w-full max-w-md mx-auto space-y-2">
+            <div className="h-3 bg-card/60 backdrop-blur-xl border border-white/20 rounded-full overflow-hidden shadow-lg">
+              <div className="h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-full animate-pulse" style={{ width: '100%' }}></div>
+            </div>
+            <p className="text-xs text-muted-foreground text-center font-medium">Preparing your game...</p>
+          </div>
+          
+          {/* Loading Dots */}
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-3 h-3 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
+            <div className="w-3 h-3 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+            <div className="w-3 h-3 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
           </div>
         </div>
       </div>
