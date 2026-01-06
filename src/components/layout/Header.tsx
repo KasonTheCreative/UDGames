@@ -19,7 +19,7 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
               <img 
                 src="https://cdn-ai.onspace.ai/onspace/files/BnkgqKgtyf2LkK94y9K9FB/kindpng_1419934.png" 
                 alt="UD-Games" 
-                className="h-10 w-10 object-cover object-top rounded-lg"
+                className="h-10 w-10 object-cover rounded-lg"
               />
             </div>
           </div>
