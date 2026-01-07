@@ -3,7 +3,7 @@ import { Header } from '../components/layout/Header';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent } from '../components/ui/card';
-import { Send, MessageCircle, Users, Clock } from 'lucide-react';
+import { Send, MessageCircle, Users, Clock, Lock, Hash, Copy, Check } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -20,7 +20,11 @@ interface Message {
 
 export function ChatRoom() {
   const [username, setUsername] = useState('');
+  const [roomCode, setRoomCode] = useState('');
+  const [currentRoom, setCurrentRoom] = useState<string | null>(null);
   const [hasJoined, setHasJoined] = useState(false);
+  const [isCreatingRoom, setIsCreatingRoom] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -86,12 +90,13 @@ export function ChatRoom() {
 
   // Load messages using polling (every 2 seconds)
   useEffect(() => {
-    if (!hasJoined) return;
+    if (!hasJoined || !currentRoom) return;
 
     const loadMessages = async () => {
       const { data, error } = await supabase
         .from('messages')
         .select('*')
+        .eq('room_code', currentRoom)
         .order('created_at', { ascending: true })
         .limit(100);
 
@@ -109,12 +114,35 @@ export function ChatRoom() {
     const interval = setInterval(loadMessages, 2000);
 
     return () => clearInterval(interval);
-  }, [hasJoined]);
+  }, [hasJoined, currentRoom]);
 
-  const handleJoin = (e: React.FormEvent) => {
+  const handleJoinPublic = (e: React.FormEvent) => {
     e.preventDefault();
     if (username.trim()) {
+      setCurrentRoom('public');
       setHasJoined(true);
+    }
+  };
+
+  const handleJoinPrivate = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (username.trim() && roomCode.trim() && roomCode.length === 6) {
+      setCurrentRoom(roomCode.toUpperCase());
+      setHasJoined(true);
+    }
+  };
+
+  const handleCreateRoom = () => {
+    const newCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+    setRoomCode(newCode);
+    setIsCreatingRoom(true);
+  };
+
+  const handleCopyCode = () => {
+    if (currentRoom) {
+      navigator.clipboard.writeText(currentRoom);
+      setCopiedCode(true);
+      setTimeout(() => setCopiedCode(false), 2000);
     }
   };
 
@@ -128,7 +156,8 @@ export function ChatRoom() {
       .from('messages')
       .insert({
         username: username,
-        message: newMessage.trim()
+        message: newMessage.trim(),
+        room_code: currentRoom || 'public'
       });
 
     if (error) {
@@ -139,6 +168,7 @@ export function ChatRoom() {
       const { data } = await supabase
         .from('messages')
         .select('*')
+        .eq('room_code', currentRoom || 'public')
         .order('created_at', { ascending: true })
         .limit(100);
       
@@ -164,43 +194,153 @@ export function ChatRoom() {
       <div className="min-h-screen bg-background">
         <Header />
         
-        <main className="container mx-auto flex min-h-[calc(100vh-80px)] items-center justify-center px-4">
-          <Card className="w-full max-w-md">
-            <CardContent className="p-8">
-              <div className="mb-6 text-center">
-                <div className="mb-4 flex justify-center">
-                  <div className="rounded-full bg-primary/10 p-4">
-                    <MessageCircle className="h-12 w-12 text-primary" />
-                  </div>
+        <main className="container mx-auto flex min-h-[calc(100vh-80px)] items-center justify-center px-4 py-8">
+          <div className="w-full max-w-2xl space-y-6">
+            <div className="text-center mb-8">
+              <div className="mb-4 flex justify-center">
+                <div className="rounded-full bg-primary/10 p-4">
+                  <MessageCircle className="h-12 w-12 text-primary" />
                 </div>
-                <h1 className="mb-2 text-3xl font-bold text-foreground">Join Chat Room</h1>
-                <p className="text-muted-foreground">Enter your name to start chatting</p>
               </div>
+              <h1 className="mb-2 text-4xl font-bold gradient-text">Join Chat Room</h1>
+              <p className="text-muted-foreground">Choose a public or private room to start chatting</p>
+            </div>
 
-              <form onSubmit={handleJoin} className="space-y-4">
-                <div>
+            {/* Username Input */}
+            <Card>
+              <CardContent className="p-6">
+                <div className="mb-4">
+                  <label className="text-sm font-semibold text-foreground mb-2 block">Your Name</label>
                   <Input
                     type="text"
-                    placeholder="Your name..."
+                    placeholder="Enter your name..."
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     maxLength={20}
-                    className="text-center text-lg"
+                    className="text-lg"
                     autoFocus
                   />
                 </div>
-                <Button 
-                  type="submit" 
-                  className="w-full gap-2" 
-                  size="lg"
-                  disabled={!username.trim()}
-                >
-                  <Users className="h-5 w-5" />
-                  Join Chat
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            {/* Room Options */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Public Room */}
+              <Card className="border-primary/20">
+                <CardContent className="p-6">
+                  <div className="mb-4 text-center">
+                    <div className="mb-3 flex justify-center">
+                      <div className="rounded-full bg-green-500/10 p-3">
+                        <Users className="h-8 w-8 text-green-400" />
+                      </div>
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground mb-2">Public Room</h2>
+                    <p className="text-sm text-muted-foreground">Join the main chat room. Open to everyone!</p>
+                  </div>
+                  <form onSubmit={handleJoinPublic}>
+                    <Button 
+                      type="submit" 
+                      className="w-full gap-2" 
+                      size="lg"
+                      disabled={!username.trim()}
+                    >
+                      <Users className="h-5 w-5" />
+                      Join Public Room
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+
+              {/* Private Room */}
+              <Card className="border-purple-500/20">
+                <CardContent className="p-6">
+                  <div className="mb-4 text-center">
+                    <div className="mb-3 flex justify-center">
+                      <div className="rounded-full bg-purple-500/10 p-3">
+                        <Lock className="h-8 w-8 text-purple-400" />
+                      </div>
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground mb-2">Private Room</h2>
+                    <p className="text-sm text-muted-foreground">Create or join a private chat with a code</p>
+                  </div>
+
+                  {!isCreatingRoom ? (
+                    <div className="space-y-3">
+                      <Button 
+                        type="button" 
+                        onClick={handleCreateRoom}
+                        className="w-full gap-2 bg-gradient-to-r from-purple-500 to-pink-500" 
+                        size="lg"
+                        disabled={!username.trim()}
+                      >
+                        <Hash className="h-5 w-5" />
+                        Create New Room
+                      </Button>
+                      <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                          <span className="w-full border-t border-border" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-card px-2 text-muted-foreground">or</span>
+                        </div>
+                      </div>
+                      <form onSubmit={handleJoinPrivate} className="space-y-2">
+                        <Input
+                          type="text"
+                          placeholder="Enter 6-digit code"
+                          value={roomCode}
+                          onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
+                          maxLength={6}
+                          className="text-center text-lg tracking-widest font-mono"
+                        />
+                        <Button 
+                          type="submit" 
+                          variant="outline"
+                          className="w-full gap-2" 
+                          size="lg"
+                          disabled={!username.trim() || roomCode.length !== 6}
+                        >
+                          <Lock className="h-5 w-5" />
+                          Join Private Room
+                        </Button>
+                      </form>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      <div className="glass-card p-4 text-center">
+                        <p className="text-xs text-muted-foreground mb-2">Your Room Code:</p>
+                        <p className="text-3xl font-black tracking-widest font-mono gradient-text mb-2">{roomCode}</p>
+                        <p className="text-xs text-muted-foreground">Share this code with friends!</p>
+                      </div>
+                      <form onSubmit={handleJoinPrivate}>
+                        <Button 
+                          type="submit" 
+                          className="w-full gap-2 bg-gradient-to-r from-purple-500 to-pink-500" 
+                          size="lg"
+                        >
+                          <Lock className="h-5 w-5" />
+                          Enter Room
+                        </Button>
+                      </form>
+                      <Button 
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setIsCreatingRoom(false);
+                          setRoomCode('');
+                        }}
+                        className="w-full"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </main>
       </div>
     );
@@ -214,8 +354,28 @@ export function ChatRoom() {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Chat Room</h1>
-            <p className="text-muted-foreground">Chatting as <span className="font-semibold text-primary">{username}</span></p>
+            <h1 className="text-3xl font-bold text-foreground">
+              {currentRoom === 'public' ? 'Public Chat Room' : 'Private Chat Room'}
+            </h1>
+            <div className="flex items-center gap-3">
+              <p className="text-muted-foreground">Chatting as <span className="font-semibold text-primary">{username}</span></p>
+              {currentRoom !== 'public' && (
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 rounded-lg bg-purple-500/10 border border-purple-500/20 px-3 py-1">
+                    <Hash className="h-3 w-3 text-purple-400" />
+                    <span className="font-mono text-sm font-bold text-purple-400">{currentRoom}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleCopyCode}
+                    className="h-7 w-7 p-0"
+                  >
+                    {copiedCode ? <Check className="h-3 w-3 text-green-400" /> : <Copy className="h-3 w-3" />}
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2">
