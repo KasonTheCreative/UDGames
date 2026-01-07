@@ -79,6 +79,15 @@
     background-size: 200% 200%;
   }
 
+  .rainbow-text {
+    background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow-shift 3s ease infinite;
+  }
+
   .nav-link {
     @apply relative px-4 py-2 text-sm font-medium text-foreground/80 transition-all duration-300 hover:text-foreground rounded-lg hover:bg-white/5;
   }
@@ -106,6 +115,10 @@
 
   .pulse-slow {
     animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-shake {
+    animation: shake 0.3s ease-in-out;
   }
 
   /* 67 Sigma Theme Decorations */
@@ -197,6 +210,17 @@
 @keyframes scale-pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
+}
+
+@keyframes rainbow-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
 }
 
 

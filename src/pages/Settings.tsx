@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Header } from '../components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
 import { Button } from '../components/ui/button';
-import { Settings as SettingsIcon, Trash2, Info, Shield, Palette, Moon, Sun, Download } from 'lucide-react';
+import { Settings as SettingsIcon, Trash2, Info, Shield, Palette, Moon, Sun, Download, Lock } from 'lucide-react';
+import { AdminPanel } from '../components/features/AdminPanel';
 import { useToast } from '../hooks/use-toast';
 import { supabase } from '../lib/supabase';
 import { 
@@ -26,6 +27,7 @@ export function Settings() {
   const [colorTheme, setColorTheme] = useState<ThemeColor>(
     getCurrentThemeColor()
   );
+  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -224,6 +226,7 @@ export function Settings() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
+      <AdminPanel isOpen={isAdminPanelOpen} onClose={() => setIsAdminPanelOpen(false)} />
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
@@ -405,8 +408,37 @@ export function Settings() {
             </CardContent>
           </Card>
 
-          {/* About */}
+          {/* Admin Access */}
           <Card className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Lock className="h-5 w-5" />
+                Admin Panel
+              </CardTitle>
+              <CardDescription>
+                Access advanced system controls
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="rounded-lg bg-muted p-4">
+                <h3 className="mb-2 font-semibold">Restricted Access</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  This panel requires administrator privileges. Only authorized users should access this area.
+                </p>
+                <Button
+                  onClick={() => setIsAdminPanelOpen(true)}
+                  className="w-full gap-2 bg-gradient-to-r from-primary to-accent hover:opacity-90"
+                  size="lg"
+                >
+                  <Lock className="h-4 w-4" />
+                  Open Admin Panel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* About */}
+          <Card className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Info className="h-5 w-5" />
