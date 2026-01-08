@@ -6,9 +6,10 @@ import { Input } from '../ui/input';
 interface AdminPanelProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpen: () => void;
 }
 
-export function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
+export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [code, setCode] = useState('');
   const [error, setError] = useState(false);
@@ -18,6 +19,8 @@ export function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
   const [isResizing, setIsResizing] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlashing, setIsFlashing] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   const CORRECT_CODE = '6421';
@@ -86,6 +89,32 @@ export function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
     }, 5000);
   };
 
+  const handleFlashingLights = () => {
+    setIsFlashing(true);
+    
+    // Create and play audio
+    // Note: Replace this URL with your uploaded audio file
+    const audio = new Audio('/audio/flash-sound.mp3'); // You'll need to add this file
+    audioRef.current = audio;
+    audio.volume = 1.0;
+    audio.play().catch(err => console.log('Audio play failed:', err));
+    
+    // Create flashing overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'flash-overlay';
+    document.body.appendChild(overlay);
+    
+    // Stop after 15 seconds
+    setTimeout(() => {
+      overlay.remove();
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      setIsFlashing(false);
+    }, 15000);
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget || (e.target as HTMLElement).classList.contains('drag-handle')) {
       setIsDragging(true);
@@ -104,10 +133,10 @@ export function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-start justify-center bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[9999] flex items-start justify-center pointer-events-none">
       <div
         ref={panelRef}
-        className="absolute bg-card border-2 border-primary rounded-2xl shadow-2xl overflow-hidden"
+        className="absolute bg-card border-2 border-primary rounded-2xl shadow-2xl overflow-hidden pointer-events-auto"
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
@@ -197,6 +226,16 @@ export function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
                     >
                       <Maximize2 className="h-5 w-5" />
                       Flip Screen {isFlipped && '(Active)'}
+                    </Button>
+                    
+                    <Button
+                      onClick={handleFlashingLights}
+                      disabled={isFlashing}
+                      className="w-full gap-2 bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600"
+                      size="lg"
+                    >
+                      <Maximize2 className="h-5 w-5" />
+                      Flashing Lights {isFlashing && '(Active)'}
                     </Button>
                   </div>
                 </div>

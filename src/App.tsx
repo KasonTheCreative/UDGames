@@ -7,11 +7,26 @@ import { AIChat } from './pages/AIChat';
 import { Tools } from './pages/Tools';
 import { Settings } from './pages/Settings';
 import { FollowMe } from './pages/FollowMe';
+import { AdminPanel } from './components/features/AdminPanel';
 
 import { initializeTheme } from './lib/themes';
 
 function App() {
   const [isSigma67, setIsSigma67] = useState(false);
+  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
+
+  // Global keyboard shortcut for admin panel (Ctrl+Shift+A)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        setIsAdminPanelOpen(prev => !prev);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Initialize theme on app load
   useEffect(() => {
@@ -46,6 +61,11 @@ function App() {
             <div className="sixty-seven">67</div>
           </>
         )}
+        <AdminPanel 
+          isOpen={isAdminPanelOpen} 
+          onClose={() => setIsAdminPanelOpen(false)}
+          onOpen={() => setIsAdminPanelOpen(true)}
+        />
       </>
     );
   }
@@ -66,6 +86,11 @@ function App() {
       <>
         <Music />
         {sigma67Decoration}
+        <AdminPanel 
+          isOpen={isAdminPanelOpen} 
+          onClose={() => setIsAdminPanelOpen(false)}
+          onOpen={() => setIsAdminPanelOpen(true)}
+        />
       </>
     );
   }
@@ -75,6 +100,11 @@ function App() {
       <>
         <ChatRoom />
         {sigma67Decoration}
+        <AdminPanel 
+          isOpen={isAdminPanelOpen} 
+          onClose={() => setIsAdminPanelOpen(false)}
+          onOpen={() => setIsAdminPanelOpen(true)}
+        />
       </>
     );
   }
@@ -84,6 +114,11 @@ function App() {
       <>
         <AIChat />
         {sigma67Decoration}
+        <AdminPanel 
+          isOpen={isAdminPanelOpen} 
+          onClose={() => setIsAdminPanelOpen(false)}
+          onOpen={() => setIsAdminPanelOpen(true)}
+        />
       </>
     );
   }
@@ -93,6 +128,11 @@ function App() {
       <>
         <Tools />
         {sigma67Decoration}
+        <AdminPanel 
+          isOpen={isAdminPanelOpen} 
+          onClose={() => setIsAdminPanelOpen(false)}
+          onOpen={() => setIsAdminPanelOpen(true)}
+        />
       </>
     );
   }
@@ -100,8 +140,13 @@ function App() {
   if (path === '/settings') {
     return (
       <>
-        <Settings />
+        <Settings onOpenAdminPanel={() => setIsAdminPanelOpen(true)} />
         {sigma67Decoration}
+        <AdminPanel 
+          isOpen={isAdminPanelOpen} 
+          onClose={() => setIsAdminPanelOpen(false)}
+          onOpen={() => setIsAdminPanelOpen(true)}
+        />
       </>
     );
   }
@@ -111,6 +156,11 @@ function App() {
       <>
         <FollowMe />
         {sigma67Decoration}
+        <AdminPanel 
+          isOpen={isAdminPanelOpen} 
+          onClose={() => setIsAdminPanelOpen(false)}
+          onOpen={() => setIsAdminPanelOpen(true)}
+        />
       </>
     );
   }
@@ -119,6 +169,11 @@ function App() {
     <>
       <Home />
       {sigma67Decoration}
+      <AdminPanel 
+        isOpen={isAdminPanelOpen} 
+        onClose={() => setIsAdminPanelOpen(false)}
+        onOpen={() => setIsAdminPanelOpen(true)}
+      />
     </>
   );
 }

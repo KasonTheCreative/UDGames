@@ -3,7 +3,7 @@ import { Header } from '../components/layout/Header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Settings as SettingsIcon, Trash2, Info, Shield, Palette, Moon, Sun, Download, Lock } from 'lucide-react';
-import { AdminPanel } from '../components/features/AdminPanel';
+
 import { useToast } from '../hooks/use-toast';
 import { supabase } from '../lib/supabase';
 import { 
@@ -20,14 +20,18 @@ import {
   type ThemeColor 
 } from '../lib/themes';
 
-export function Settings() {
+interface SettingsProps {
+  onOpenAdminPanel: () => void;
+}
+
+export function Settings({ onOpenAdminPanel }: SettingsProps) {
   const [theme, setTheme] = useState<'light' | 'dark'>(
     document.documentElement.classList.contains('dark') ? 'dark' : 'light'
   );
   const [colorTheme, setColorTheme] = useState<ThemeColor>(
     getCurrentThemeColor()
   );
-  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
+
   const { toast } = useToast();
 
   useEffect(() => {
@@ -226,7 +230,6 @@ export function Settings() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      <AdminPanel isOpen={isAdminPanelOpen} onClose={() => setIsAdminPanelOpen(false)} />
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
@@ -426,13 +429,16 @@ export function Settings() {
                   This panel requires administrator privileges. Only authorized users should access this area.
                 </p>
                 <Button
-                  onClick={() => setIsAdminPanelOpen(true)}
+                  onClick={onOpenAdminPanel}
                   className="w-full gap-2 bg-gradient-to-r from-primary to-accent hover:opacity-90"
                   size="lg"
                 >
                   <Lock className="h-4 w-4" />
                   Open Admin Panel
                 </Button>
+                <p className="text-xs text-muted-foreground text-center mt-2">
+                  💡 Tip: Press <kbd className="px-2 py-1 bg-muted rounded">Ctrl+Shift+A</kbd> anywhere to toggle
+                </p>
               </div>
             </CardContent>
           </Card>
