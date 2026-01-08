@@ -31,6 +31,8 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
   const [isSpeedUp, setIsSpeedUp] = useState(false);
   const [isGhost, setIsGhost] = useState(false);
   const [isWaves, setIsWaves] = useState(false);
+  const [is67Mode, setIs67Mode] = useState(false);
+  const [isTungSahur, setIsTungSahur] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const matrixIntervalRef = useRef<number | null>(null);
@@ -315,6 +317,88 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
     }, 10000);
   };
 
+  const handle67Mode = () => {
+    setIs67Mode(true);
+    
+    // Create container for 67s
+    const container = document.createElement('div');
+    container.className = 'brainrot-67-container';
+    container.style.position = 'fixed';
+    container.style.inset = '0';
+    container.style.zIndex = '9997';
+    container.style.pointerEvents = 'none';
+    
+    // Create 30 random 67s
+    for (let i = 0; i < 30; i++) {
+      const text = document.createElement('div');
+      text.textContent = '67';
+      text.className = 'brainrot-67';
+      text.style.position = 'fixed';
+      text.style.fontSize = Math.random() * 100 + 40 + 'px';
+      text.style.fontWeight = '900';
+      text.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      text.style.left = Math.random() * 100 + 'vw';
+      text.style.top = Math.random() * 100 + 'vh';
+      text.style.opacity = String(Math.random() * 0.5 + 0.3);
+      text.style.animation = `spin-67 ${Math.random() * 3 + 2}s linear infinite, float-67 ${Math.random() * 4 + 3}s ease-in-out infinite`;
+      text.style.animationDelay = `${Math.random() * 2}s`;
+      container.appendChild(text);
+    }
+    
+    document.body.appendChild(container);
+    
+    setTimeout(() => {
+      container.remove();
+      setIs67Mode(false);
+    }, 15000);
+  };
+
+  const handleTungSahur = () => {
+    setIsTungSahur(true);
+    
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.inset = '0';
+    overlay.style.zIndex = '99999';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+    overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.animation = 'fadeIn 0.3s ease';
+    
+    // Create text
+    const text = document.createElement('div');
+    text.textContent = 'TUNG JUMP SCARE!!!!!';
+    text.style.fontSize = '4rem';
+    text.style.fontWeight = '900';
+    text.style.color = '#ff0000';
+    text.style.textShadow = '0 0 20px #ff0000, 0 0 40px #ff0000';
+    text.style.marginBottom = '2rem';
+    text.style.animation = 'shake-intense 0.1s infinite, pulse-glow 0.5s ease-in-out infinite';
+    overlay.appendChild(text);
+    
+    // Create image
+    const img = document.createElement('img');
+    img.src = 'https://cdn-ai.onspace.ai/onspace/files/bNdhcm43k5m5QvSSvsXDPX/Tung-Tung-Tung-Sahur-Transparent-HQ.png';
+    img.style.maxWidth = '80vw';
+    img.style.maxHeight = '60vh';
+    img.style.animation = 'shake-intense 0.05s infinite';
+    overlay.appendChild(img);
+    
+    document.body.appendChild(overlay);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+      overlay.style.animation = 'fadeOut 0.3s ease';
+      setTimeout(() => {
+        overlay.remove();
+        setIsTungSahur(false);
+      }, 300);
+    }, 5000);
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget || (e.target as HTMLElement).classList.contains('drag-handle')) {
       setIsDragging(true);
@@ -553,6 +637,29 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
                       size="sm"
                     >
                       👻 Ghost Mode {isGhost && '✓'}
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="glass-card p-6">
+                  <h3 className="text-lg font-bold mb-4 text-foreground">🧠 Brainrot</h3>
+                  <div className="grid gap-2">
+                    <Button
+                      onClick={handle67Mode}
+                      disabled={is67Mode}
+                      className="w-full gap-2 bg-gradient-to-r from-yellow-500 to-purple-500"
+                      size="sm"
+                    >
+                      😎 67 Mode {is67Mode && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleTungSahur}
+                      disabled={isTungSahur}
+                      className="w-full gap-2 bg-gradient-to-r from-orange-600 to-red-600"
+                      size="sm"
+                    >
+                      🔔 Tung Tung Sahur {isTungSahur && '✓'}
                     </Button>
                   </div>
                 </div>
