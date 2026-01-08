@@ -6,6 +6,7 @@ import { ChatRoom } from './pages/ChatRoom';
 import { AIChat } from './pages/AIChat';
 import { Tools } from './pages/Tools';
 import { Settings } from './pages/Settings';
+import { FollowMe } from './pages/FollowMe';
 
 import { initializeTheme } from './lib/themes';
 
@@ -105,6 +106,14 @@ function App() {
     );
   }
   
+  if (path === '/follow') {
+    return (
+      <>
+        <FollowMe />
+        {sigma67Decoration}
+      </>
+    );
+  }
   
   return (
     <>
