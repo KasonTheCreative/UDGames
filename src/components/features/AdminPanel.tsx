@@ -20,8 +20,20 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [isFlipped, setIsFlipped] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
+  const [isRainbow, setIsRainbow] = useState(false);
+  const [isSlowMotion, setIsSlowMotion] = useState(false);
+  const [isEarthquake, setIsEarthquake] = useState(false);
+  const [isInverted, setIsInverted] = useState(false);
+  const [isMatrix, setIsMatrix] = useState(false);
+  const [isDisco, setIsDisco] = useState(false);
+  const [isNeon, setIsNeon] = useState(false);
+  const [isBlur, setIsBlur] = useState(false);
+  const [isSpeedUp, setIsSpeedUp] = useState(false);
+  const [isGhost, setIsGhost] = useState(false);
+  const [isWaves, setIsWaves] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const matrixIntervalRef = useRef<number | null>(null);
 
   const CORRECT_CODE = '6421';
 
@@ -113,6 +125,194 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
       }
       setIsFlashing(false);
     }, 15000);
+  };
+
+  const handleRainbowMode = () => {
+    setIsRainbow(true);
+    document.body.style.animation = 'rainbow-background 3s ease infinite';
+    setTimeout(() => {
+      document.body.style.animation = '';
+      setIsRainbow(false);
+    }, 10000);
+  };
+
+  const handleSlowMotion = () => {
+    setIsSlowMotion(true);
+    document.body.style.animationDuration = '10s';
+    document.querySelectorAll('*').forEach(el => {
+      (el as HTMLElement).style.transition = 'all 2s ease';
+    });
+    setTimeout(() => {
+      document.body.style.animationDuration = '';
+      document.querySelectorAll('*').forEach(el => {
+        (el as HTMLElement).style.transition = '';
+      });
+      setIsSlowMotion(false);
+    }, 10000);
+  };
+
+  const handleEarthquake = () => {
+    setIsEarthquake(true);
+    document.body.classList.add('earthquake');
+    setTimeout(() => {
+      document.body.classList.remove('earthquake');
+      setIsEarthquake(false);
+    }, 5000);
+  };
+
+  const handleInvertColors = () => {
+    setIsInverted(true);
+    document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+    setTimeout(() => {
+      document.body.style.filter = '';
+      setIsInverted(false);
+    }, 10000);
+  };
+
+  const handleMatrixRain = () => {
+    setIsMatrix(true);
+    
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '9998';
+    canvas.style.pointerEvents = 'none';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d')!;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops: number[] = [];
+    
+    for (let i = 0; i < columns; i++) {
+      drops[i] = Math.random() * -100;
+    }
+    
+    const draw = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
+      
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    };
+    
+    matrixIntervalRef.current = window.setInterval(draw, 50);
+    
+    setTimeout(() => {
+      if (matrixIntervalRef.current) {
+        clearInterval(matrixIntervalRef.current);
+        matrixIntervalRef.current = null;
+      }
+      canvas.remove();
+      setIsMatrix(false);
+    }, 15000);
+  };
+
+  const handleDiscoBall = () => {
+    setIsDisco(true);
+    const overlay = document.createElement('div');
+    overlay.className = 'disco-overlay';
+    document.body.appendChild(overlay);
+    
+    setTimeout(() => {
+      overlay.remove();
+      setIsDisco(false);
+    }, 10000);
+  };
+
+  const handleNeonGlow = () => {
+    setIsNeon(true);
+    document.body.classList.add('neon-mode');
+    setTimeout(() => {
+      document.body.classList.remove('neon-mode');
+      setIsNeon(false);
+    }, 10000);
+  };
+
+  const handleBlurVision = () => {
+    setIsBlur(true);
+    document.body.style.filter = 'blur(10px)';
+    setTimeout(() => {
+      document.body.style.filter = 'blur(5px)';
+      setTimeout(() => {
+        document.body.style.filter = 'blur(2px)';
+        setTimeout(() => {
+          document.body.style.filter = '';
+          setIsBlur(false);
+        }, 1000);
+      }, 1000);
+    }, 3000);
+  };
+
+  const handleSpeedUp = () => {
+    setIsSpeedUp(true);
+    document.querySelectorAll('*').forEach(el => {
+      (el as HTMLElement).style.transition = 'all 0.1s ease';
+      (el as HTMLElement).style.animationDuration = '0.5s';
+    });
+    setTimeout(() => {
+      document.querySelectorAll('*').forEach(el => {
+        (el as HTMLElement).style.transition = '';
+        (el as HTMLElement).style.animationDuration = '';
+      });
+      setIsSpeedUp(false);
+    }, 8000);
+  };
+
+  const handleConfetti = () => {
+    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+    const confettiCount = 100;
+    
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDelay = Math.random() * 2 + 's';
+      document.body.appendChild(confetti);
+      
+      setTimeout(() => confetti.remove(), 5000);
+    }
+  };
+
+  const handleGhostMode = () => {
+    setIsGhost(true);
+    document.body.style.opacity = '0.3';
+    setTimeout(() => {
+      document.body.style.opacity = '0.5';
+      setTimeout(() => {
+        document.body.style.opacity = '0.7';
+        setTimeout(() => {
+          document.body.style.opacity = '';
+          setIsGhost(false);
+        }, 2000);
+      }, 2000);
+    }, 2000);
+  };
+
+  const handleTrippyWaves = () => {
+    setIsWaves(true);
+    document.body.classList.add('trippy-waves');
+    setTimeout(() => {
+      document.body.classList.remove('trippy-waves');
+      setIsWaves(false);
+    }, 10000);
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -216,35 +416,145 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
 
               <div className="grid gap-4">
                 <div className="glass-card p-6">
-                  <h3 className="text-lg font-bold mb-4 text-foreground">Display Controls</h3>
-                  <div className="space-y-3">
+                  <h3 className="text-lg font-bold mb-4 text-foreground">🎨 Visual Effects</h3>
+                  <div className="grid gap-2">
                     <Button
                       onClick={handleFlipScreen}
                       disabled={isFlipped}
                       className="w-full gap-2 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600"
-                      size="lg"
+                      size="sm"
                     >
-                      <Maximize2 className="h-5 w-5" />
-                      Flip Screen {isFlipped && '(Active)'}
+                      <Maximize2 className="h-4 w-4" />
+                      Flip Screen {isFlipped && '✓'}
                     </Button>
                     
                     <Button
                       onClick={handleFlashingLights}
                       disabled={isFlashing}
                       className="w-full gap-2 bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600"
-                      size="lg"
+                      size="sm"
                     >
-                      <Maximize2 className="h-5 w-5" />
-                      Flashing Lights {isFlashing && '(Active)'}
+                      <Maximize2 className="h-4 w-4" />
+                      Flashing Lights {isFlashing && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleRainbowMode}
+                      disabled={isRainbow}
+                      className="w-full gap-2 bg-gradient-to-r from-red-500 via-yellow-500 to-purple-500"
+                      size="sm"
+                    >
+                      🌈 Rainbow Mode {isRainbow && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleInvertColors}
+                      disabled={isInverted}
+                      className="w-full gap-2 bg-gradient-to-r from-pink-500 to-indigo-500"
+                      size="sm"
+                    >
+                      🔄 Invert Colors {isInverted && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleNeonGlow}
+                      disabled={isNeon}
+                      className="w-full gap-2 bg-gradient-to-r from-cyan-400 to-pink-400"
+                      size="sm"
+                    >
+                      ✨ Neon Glow {isNeon && '✓'}
                     </Button>
                   </div>
                 </div>
 
                 <div className="glass-card p-6">
-                  <h3 className="text-lg font-bold mb-2 text-foreground">Coming Soon</h3>
-                  <p className="text-sm text-muted-foreground">
-                    More admin controls will be added here...
-                  </p>
+                  <h3 className="text-lg font-bold mb-4 text-foreground">⚡ Motion Effects</h3>
+                  <div className="grid gap-2">
+                    <Button
+                      onClick={handleSlowMotion}
+                      disabled={isSlowMotion}
+                      className="w-full gap-2 bg-gradient-to-r from-blue-500 to-cyan-500"
+                      size="sm"
+                    >
+                      🐌 Slow Motion {isSlowMotion && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleSpeedUp}
+                      disabled={isSpeedUp}
+                      className="w-full gap-2 bg-gradient-to-r from-orange-500 to-red-500"
+                      size="sm"
+                    >
+                      ⚡ Speed Up {isSpeedUp && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleEarthquake}
+                      disabled={isEarthquake}
+                      className="w-full gap-2 bg-gradient-to-r from-amber-500 to-orange-500"
+                      size="sm"
+                    >
+                      🌍 Earthquake {isEarthquake && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleTrippyWaves}
+                      disabled={isWaves}
+                      className="w-full gap-2 bg-gradient-to-r from-purple-500 to-pink-500"
+                      size="sm"
+                    >
+                      🌊 Trippy Waves {isWaves && '✓'}
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="glass-card p-6">
+                  <h3 className="text-lg font-bold mb-4 text-foreground">🎭 Special Effects</h3>
+                  <div className="grid gap-2">
+                    <Button
+                      onClick={handleMatrixRain}
+                      disabled={isMatrix}
+                      className="w-full gap-2 bg-gradient-to-r from-green-600 to-emerald-600"
+                      size="sm"
+                    >
+                      💚 Matrix Rain {isMatrix && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleDiscoBall}
+                      disabled={isDisco}
+                      className="w-full gap-2 bg-gradient-to-r from-fuchsia-500 to-purple-500"
+                      size="sm"
+                    >
+                      🪩 Disco Ball {isDisco && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleBlurVision}
+                      disabled={isBlur}
+                      className="w-full gap-2 bg-gradient-to-r from-slate-500 to-gray-500"
+                      size="sm"
+                    >
+                      👓 Blur Vision {isBlur && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleConfetti}
+                      className="w-full gap-2 bg-gradient-to-r from-yellow-500 via-pink-500 to-blue-500"
+                      size="sm"
+                    >
+                      🎉 Confetti Blast
+                    </Button>
+
+                    <Button
+                      onClick={handleGhostMode}
+                      disabled={isGhost}
+                      className="w-full gap-2 bg-gradient-to-r from-gray-600 to-slate-600"
+                      size="sm"
+                    >
+                      👻 Ghost Mode {isGhost && '✓'}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
