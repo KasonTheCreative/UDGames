@@ -3,7 +3,7 @@ import { Header } from '../components/layout/Header';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent } from '../components/ui/card';
-import { Send, MessageCircle, Users, Clock, Lock, Hash, Copy, Check, Phone, Mic, MicOff, PhoneOff } from 'lucide-react';
+import { Send, MessageCircle, Users, Clock, Lock, Hash, Copy, Check, Phone, Mic, MicOff, PhoneOff, Volume2, Laugh, Music, AlertCircle, Zap } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -29,6 +29,23 @@ export function ChatRoom() {
   const [isInVoiceCall, setIsInVoiceCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [voiceRoomCode, setVoiceRoomCode] = useState('');
+  const [soundboardOpen, setSoundboardOpen] = useState(false);
+
+  const soundboardSounds = [
+    { name: 'Airhorn', icon: Volume2, color: 'from-red-500 to-orange-500' },
+    { name: 'Laugh', icon: Laugh, color: 'from-yellow-500 to-orange-500' },
+    { name: 'Applause', icon: Music, color: 'from-green-500 to-emerald-500' },
+    { name: 'Bruh', icon: AlertCircle, color: 'from-purple-500 to-pink-500' },
+    { name: 'Wow', icon: Zap, color: 'from-cyan-500 to-blue-500' },
+    { name: 'Oof', icon: AlertCircle, color: 'from-gray-500 to-slate-500' },
+  ];
+
+  const playSound = (soundName: string) => {
+    toast({
+      title: `🔊 ${soundName}`,
+      description: 'Playing sound...',
+    });
+  };
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -548,20 +565,26 @@ export function ChatRoom() {
                       <p className="text-xs text-muted-foreground">Connected as {username}</p>
                     </div>
 
+                    {/* Voice Participants */}
                     <div className="glass-card p-6 mb-6">
+                      <h3 className="text-sm font-semibold mb-4 text-center text-muted-foreground">PARTICIPANTS</h3>
                       <div className="flex items-center justify-center gap-8">
                         <div className="text-center">
                           <div className="mb-2 flex justify-center">
-                            <div className="rounded-full bg-primary/10 p-3">
-                              <User className="h-6 w-6 text-primary" />
+                            <div className="rounded-full bg-primary/10 p-3 relative">
+                              <Users className="h-6 w-6 text-primary" />
+                              {!isMuted && (
+                                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                              )}
                             </div>
                           </div>
-                          <p className="text-xs text-muted-foreground">You</p>
+                          <p className="text-xs font-semibold text-foreground">{username}</p>
+                          <p className="text-xs text-muted-foreground">{isMuted ? '🔇 Muted' : '🎤 Speaking'}</p>
                         </div>
                         <div className="text-center opacity-50">
                           <div className="mb-2 flex justify-center">
                             <div className="rounded-full bg-muted p-3">
-                              <User className="h-6 w-6 text-muted-foreground" />
+                              <Users className="h-6 w-6 text-muted-foreground" />
                             </div>
                           </div>
                           <p className="text-xs text-muted-foreground">Waiting...</p>
@@ -569,43 +592,89 @@ export function ChatRoom() {
                       </div>
                     </div>
 
-                    <div className="flex gap-3">
-                      <Button
-                        variant={isMuted ? "destructive" : "outline"}
-                        onClick={() => setIsMuted(!isMuted)}
-                        className="flex-1 gap-2"
-                        size="lg"
-                      >
-                        {isMuted ? (
-                          <>
-                            <MicOff className="h-5 w-5" />
-                            Unmute
-                          </>
-                        ) : (
-                          <>
-                            <Mic className="h-5 w-5" />
-                            Mute
-                          </>
-                        )}
-                      </Button>
+                    {/* Soundboard */}
+                    {soundboardOpen && (
+                      <div className="glass-card p-4 mb-4 animate-fade-in">
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="text-sm font-semibold text-foreground">🎵 Soundboard</h3>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setSoundboardOpen(false)}
+                          >
+                            ✕
+                          </Button>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                          {soundboardSounds.map((sound) => {
+                            const Icon = sound.icon;
+                            return (
+                              <Button
+                                key={sound.name}
+                                onClick={() => playSound(sound.name)}
+                                className={`gap-1 bg-gradient-to-r ${sound.color} hover:opacity-90 transition-opacity`}
+                                size="sm"
+                              >
+                                <Icon className="h-3 w-3" />
+                                <span className="text-xs">{sound.name}</span>
+                              </Button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
 
-                      <Button
-                        variant="destructive"
-                        onClick={() => {
-                          setIsInVoiceCall(false);
-                          setIsVoiceChatOpen(false);
-                          setIsMuted(false);
-                          toast({
-                            title: 'Call Ended',
-                            description: 'You have left the voice call',
-                          });
-                        }}
-                        className="flex-1 gap-2"
-                        size="lg"
-                      >
-                        <PhoneOff className="h-5 w-5" />
-                        Leave Call
-                      </Button>
+                    {/* Controls */}
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-3 gap-2">
+                        <Button
+                          variant={isMuted ? "destructive" : "outline"}
+                          onClick={() => setIsMuted(!isMuted)}
+                          className="gap-2"
+                          size="lg"
+                        >
+                          {isMuted ? (
+                            <>
+                              <MicOff className="h-5 w-5" />
+                              <span className="text-xs">Muted</span>
+                            </>
+                          ) : (
+                            <>
+                              <Mic className="h-5 w-5" />
+                              <span className="text-xs">Mute</span>
+                            </>
+                          )}
+                        </Button>
+
+                        <Button
+                          variant={soundboardOpen ? "default" : "outline"}
+                          onClick={() => setSoundboardOpen(!soundboardOpen)}
+                          className="gap-2"
+                          size="lg"
+                        >
+                          <Volume2 className="h-5 w-5" />
+                          <span className="text-xs">Sounds</span>
+                        </Button>
+
+                        <Button
+                          variant="destructive"
+                          onClick={() => {
+                            setIsInVoiceCall(false);
+                            setIsVoiceChatOpen(false);
+                            setIsMuted(false);
+                            setSoundboardOpen(false);
+                            toast({
+                              title: 'Call Ended',
+                              description: 'You have left the voice call',
+                            });
+                          }}
+                          className="gap-2"
+                          size="lg"
+                        >
+                          <PhoneOff className="h-5 w-5" />
+                          <span className="text-xs">Leave</span>
+                        </Button>
+                      </div>
                     </div>
 
                     <p className="text-xs text-center text-muted-foreground mt-4">
