@@ -3,7 +3,7 @@ import { Header } from '../components/layout/Header';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent } from '../components/ui/card';
-import { Send, MessageCircle, Users, Clock, Lock, Hash, Copy, Check } from 'lucide-react';
+import { Send, MessageCircle, Users, Clock, Lock, Hash, Copy, Check, Phone, Mic, MicOff, PhoneOff } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -25,6 +25,10 @@ export function ChatRoom() {
   const [hasJoined, setHasJoined] = useState(false);
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
+  const [isVoiceChatOpen, setIsVoiceChatOpen] = useState(false);
+  const [isInVoiceCall, setIsInVoiceCall] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [voiceRoomCode, setVoiceRoomCode] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -378,6 +382,14 @@ export function ChatRoom() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <Button
+              variant={isInVoiceCall ? "destructive" : "default"}
+              onClick={() => setIsVoiceChatOpen(true)}
+              className="gap-2"
+            >
+              <Phone className="h-4 w-4" />
+              {isInVoiceCall ? 'In Voice Call' : 'Voice Call'}
+            </Button>
             <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <div className="text-sm">
@@ -456,6 +468,155 @@ export function ChatRoom() {
             </form>
           </CardContent>
         </Card>
+
+        {/* Voice Chat Modal */}
+        {isVoiceChatOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+            <Card className="w-full max-w-md">
+              <CardContent className="p-6">
+                {!isInVoiceCall ? (
+                  <div>
+                    <div className="text-center mb-6">
+                      <div className="mb-4 flex justify-center">
+                        <div className="rounded-full bg-primary/10 p-4">
+                          <Phone className="h-12 w-12 text-primary" />
+                        </div>
+                      </div>
+                      <h2 className="text-2xl font-bold gradient-text mb-2">Join Voice Call</h2>
+                      <p className="text-muted-foreground">Connect with others through voice</p>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Button
+                        onClick={() => {
+                          setIsInVoiceCall(true);
+                          setVoiceRoomCode('PUBLIC');
+                          toast({
+                            title: 'Joined Public Voice',
+                            description: 'You are now in the public voice channel',
+                          });
+                        }}
+                        className="w-full gap-2"
+                        size="lg"
+                      >
+                        <Users className="h-5 w-5" />
+                        Join Public Voice
+                      </Button>
+
+                      {currentRoom !== 'public' && (
+                        <Button
+                          onClick={() => {
+                            setIsInVoiceCall(true);
+                            setVoiceRoomCode(currentRoom || '');
+                            toast({
+                              title: 'Joined Private Voice',
+                              description: `Connected to voice room ${currentRoom}`,
+                            });
+                          }}
+                          className="w-full gap-2 bg-gradient-to-r from-purple-500 to-pink-500"
+                          size="lg"
+                        >
+                          <Lock className="h-5 w-5" />
+                          Join Private Voice
+                        </Button>
+                      )}
+
+                      <Button
+                        variant="ghost"
+                        onClick={() => setIsVoiceChatOpen(false)}
+                        className="w-full"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="text-center mb-6">
+                      <div className="mb-4 flex justify-center">
+                        <div className="rounded-full bg-green-500/10 p-4 animate-pulse">
+                          <Phone className="h-12 w-12 text-green-400" />
+                        </div>
+                      </div>
+                      <h2 className="text-2xl font-bold text-foreground mb-2">Voice Call Active</h2>
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                        <p className="text-sm text-muted-foreground">
+                          {voiceRoomCode === 'PUBLIC' ? 'Public Voice Channel' : `Room: ${voiceRoomCode}`}
+                        </p>
+                      </div>
+                      <p className="text-xs text-muted-foreground">Connected as {username}</p>
+                    </div>
+
+                    <div className="glass-card p-6 mb-6">
+                      <div className="flex items-center justify-center gap-8">
+                        <div className="text-center">
+                          <div className="mb-2 flex justify-center">
+                            <div className="rounded-full bg-primary/10 p-3">
+                              <User className="h-6 w-6 text-primary" />
+                            </div>
+                          </div>
+                          <p className="text-xs text-muted-foreground">You</p>
+                        </div>
+                        <div className="text-center opacity-50">
+                          <div className="mb-2 flex justify-center">
+                            <div className="rounded-full bg-muted p-3">
+                              <User className="h-6 w-6 text-muted-foreground" />
+                            </div>
+                          </div>
+                          <p className="text-xs text-muted-foreground">Waiting...</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-3">
+                      <Button
+                        variant={isMuted ? "destructive" : "outline"}
+                        onClick={() => setIsMuted(!isMuted)}
+                        className="flex-1 gap-2"
+                        size="lg"
+                      >
+                        {isMuted ? (
+                          <>
+                            <MicOff className="h-5 w-5" />
+                            Unmute
+                          </>
+                        ) : (
+                          <>
+                            <Mic className="h-5 w-5" />
+                            Mute
+                          </>
+                        )}
+                      </Button>
+
+                      <Button
+                        variant="destructive"
+                        onClick={() => {
+                          setIsInVoiceCall(false);
+                          setIsVoiceChatOpen(false);
+                          setIsMuted(false);
+                          toast({
+                            title: 'Call Ended',
+                            description: 'You have left the voice call',
+                          });
+                        }}
+                        className="flex-1 gap-2"
+                        size="lg"
+                      >
+                        <PhoneOff className="h-5 w-5" />
+                        Leave Call
+                      </Button>
+                    </div>
+
+                    <p className="text-xs text-center text-muted-foreground mt-4">
+                      💡 Voice calls are simulated. Full voice functionality requires WebRTC integration.
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </main>
     </div>
   );

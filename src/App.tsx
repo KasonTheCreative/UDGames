@@ -3,6 +3,7 @@ import { Home } from './pages/Home';
 import { GamePlayer } from './pages/GamePlayer';
 import { Music } from './pages/Music';
 import { ChatRoom } from './pages/ChatRoom';
+import { Community } from './pages/Community';
 import { AIChat } from './pages/AIChat';
 import { Tools } from './pages/Tools';
 import { Settings } from './pages/Settings';
@@ -99,6 +100,20 @@ function App() {
     return (
       <>
         <ChatRoom />
+        {sigma67Decoration}
+        <AdminPanel 
+          isOpen={isAdminPanelOpen} 
+          onClose={() => setIsAdminPanelOpen(false)}
+          onOpen={() => setIsAdminPanelOpen(true)}
+        />
+      </>
+    );
+  }
+  
+  if (path === '/community') {
+    return (
+      <>
+        <Community />
         {sigma67Decoration}
         <AdminPanel 
           isOpen={isAdminPanelOpen} 

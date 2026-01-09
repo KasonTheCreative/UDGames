@@ -54,6 +54,7 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
           <a href="/tools" className="nav-link">Tools</a>
           <a href="/music" className="nav-link">Music</a>
           <a href="/chat" className="nav-link">Chat</a>
+          <a href="/community" className="nav-link">Community</a>
           <a href="/ai" className="nav-link">AI</a>
           <a href="/follow" className="nav-link">Follow</a>
 
