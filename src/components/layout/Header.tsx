@@ -12,18 +12,12 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-background/60 backdrop-blur-2xl">
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-3 group relative">
+        <a href="/" className="group relative">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
             <div className="relative rounded-xl bg-gradient-to-br from-cyan-500 via-purple-500 to-pink-500 p-2.5">
               <Zap className="h-6 w-6 text-white" fill="currentColor" />
             </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-2xl font-black gradient-text tracking-tight">
-              UD-Games
-            </span>
-            <span className="text-[10px] text-muted-foreground tracking-widest uppercase">Unblocked</span>
           </div>
         </a>
 
@@ -49,7 +43,7 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
           <OnlineCounter />
           <a href="/" className="nav-link group">
             <Sparkles className="h-4 w-4 inline-block mr-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-            Home
+            Games
           </a>
           <a href="/tools" className="nav-link">Tools</a>
           <a href="/music" className="nav-link">Music</a>
