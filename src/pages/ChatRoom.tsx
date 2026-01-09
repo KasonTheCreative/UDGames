@@ -3,7 +3,7 @@ import { Header } from '../components/layout/Header';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent } from '../components/ui/card';
-import { Send, MessageCircle, Users, Clock, Lock, Hash, Copy, Check, Phone, Mic, MicOff, PhoneOff, Volume2, Laugh, Music, AlertCircle, Zap } from 'lucide-react';
+import { Send, MessageCircle, Users, Clock, Lock, Hash, Copy, Check, Phone, Mic, MicOff, PhoneOff, Volume2, Laugh, Music, AlertCircle, Zap, Radio } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -30,6 +30,7 @@ export function ChatRoom() {
   const [isMuted, setIsMuted] = useState(false);
   const [voiceRoomCode, setVoiceRoomCode] = useState('');
   const [soundboardOpen, setSoundboardOpen] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const soundboardSounds = [
     { name: 'Airhorn', icon: Volume2, color: 'from-red-500 to-orange-500' },
@@ -573,13 +574,20 @@ export function ChatRoom() {
                           <div className="mb-2 flex justify-center">
                             <div className="rounded-full bg-primary/10 p-3 relative">
                               <Users className="h-6 w-6 text-primary" />
-                              {!isMuted && (
-                                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                              {isSpeaking && !isMuted && (
+                                <div className="absolute -top-1 -right-1 bg-green-400 rounded-full p-1 animate-pulse">
+                                  <Radio className="h-3 w-3 text-white" />
+                                </div>
                               )}
                             </div>
                           </div>
-                          <p className="text-xs font-semibold text-foreground">{username}</p>
-                          <p className="text-xs text-muted-foreground">{isMuted ? '🔇 Muted' : '🎤 Speaking'}</p>
+                          <p className="text-xs font-semibold text-foreground flex items-center justify-center gap-1">
+                            {username}
+                            {isSpeaking && !isMuted && (
+                              <Radio className="h-3 w-3 text-green-400 animate-pulse" />
+                            )}
+                          </p>
+                          <p className="text-xs text-muted-foreground">{isMuted ? '🔇 Muted' : '🎤 Ready'}</p>
                         </div>
                         <div className="text-center opacity-50">
                           <div className="mb-2 flex justify-center">
@@ -605,7 +613,7 @@ export function ChatRoom() {
                             ✕
                           </Button>
                         </div>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-4 gap-2">
                           {soundboardSounds.map((sound) => {
                             const Icon = sound.icon;
                             return (
@@ -626,10 +634,13 @@ export function ChatRoom() {
 
                     {/* Controls */}
                     <div className="space-y-3">
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-4 gap-2">
                         <Button
                           variant={isMuted ? "destructive" : "outline"}
-                          onClick={() => setIsMuted(!isMuted)}
+                          onClick={() => {
+                            setIsMuted(!isMuted);
+                            if (!isMuted) setIsSpeaking(false);
+                          }}
                           className="gap-2"
                           size="lg"
                         >
@@ -644,6 +655,17 @@ export function ChatRoom() {
                               <span className="text-xs">Mute</span>
                             </>
                           )}
+                        </Button>
+
+                        <Button
+                          variant={isSpeaking ? "default" : "outline"}
+                          onClick={() => setIsSpeaking(!isSpeaking)}
+                          disabled={isMuted}
+                          className="gap-2"
+                          size="lg"
+                        >
+                          <Radio className="h-5 w-5" />
+                          <span className="text-xs">{isSpeaking ? 'Stop' : 'Talk'}</span>
                         </Button>
 
                         <Button
@@ -663,6 +685,7 @@ export function ChatRoom() {
                             setIsVoiceChatOpen(false);
                             setIsMuted(false);
                             setSoundboardOpen(false);
+                            setIsSpeaking(false);
                             toast({
                               title: 'Call Ended',
                               description: 'You have left the voice call',
