@@ -423,7 +423,7 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
     text.style.color = '#00ff00';
     text.style.textShadow = '0 0 30px #00ff00, 0 0 60px #00ff00, 0 0 90px #00ff00';
     text.style.marginBottom = '2rem';
-    text.style.animation = 'shake-intense 0.2s infinite, pulse-glow 0.3s ease-in-out infinite';
+    text.style.animation = 'pulse-glow 0.3s ease-in-out infinite';
     text.style.zIndex = '100001';
     text.style.position = 'relative';
     overlay.appendChild(text);
@@ -434,7 +434,6 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
     img.style.width = '90vw';
     img.style.height = '90vh';
     img.style.objectFit = 'contain';
-    img.style.animation = 'shake-intense 3s infinite';
     img.style.position = 'absolute';
     img.style.zIndex = '100000';
     overlay.appendChild(img);
