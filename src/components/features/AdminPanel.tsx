@@ -434,7 +434,7 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
     img.style.width = '90vw';
     img.style.height = '90vh';
     img.style.objectFit = 'contain';
-    img.style.animation = 'shake-intense 0.1s infinite';
+    img.style.animation = 'shake-intense 3s infinite';
     img.style.position = 'absolute';
     img.style.zIndex = '100000';
     overlay.appendChild(img);
@@ -720,7 +720,7 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
                       className="w-full gap-2 bg-gradient-to-r from-green-500 to-lime-500"
                       size="sm"
                     >
-                      💚 luka... {isLukaDih && '✓'}
+                      💔 luka... {isLukaDih && '✓'}
                     </Button>
                   </div>
                 </div>
