@@ -33,6 +33,7 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
   const [isWaves, setIsWaves] = useState(false);
   const [is67Mode, setIs67Mode] = useState(false);
   const [isTungSahur, setIsTungSahur] = useState(false);
+  const [isLukaDih, setIsLukaDih] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const matrixIntervalRef = useRef<number | null>(null);
@@ -399,6 +400,57 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
     }, 5000);
   };
 
+  const handleLukaDih = () => {
+    setIsLukaDih(true);
+    
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.inset = '0';
+    overlay.style.zIndex = '99999';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+    overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.animation = 'fadeIn 0.3s ease';
+    
+    // Create text
+    const text = document.createElement('div');
+    text.textContent = 'LUKA DIH';
+    text.style.fontSize = '8rem';
+    text.style.fontWeight = '900';
+    text.style.color = '#00ff00';
+    text.style.textShadow = '0 0 30px #00ff00, 0 0 60px #00ff00, 0 0 90px #00ff00';
+    text.style.marginBottom = '2rem';
+    text.style.animation = 'shake-intense 0.2s infinite, pulse-glow 0.3s ease-in-out infinite';
+    text.style.zIndex = '100001';
+    text.style.position = 'relative';
+    overlay.appendChild(text);
+    
+    // Create image - fills most of the screen
+    const img = document.createElement('img');
+    img.src = 'https://cdn-ai.onspace.ai/onspace/files/AFae9mMTSVfh3ke9dp33h8/Untitled_design.png';
+    img.style.width = '90vw';
+    img.style.height = '90vh';
+    img.style.objectFit = 'contain';
+    img.style.animation = 'shake-intense 0.1s infinite';
+    img.style.position = 'absolute';
+    img.style.zIndex = '100000';
+    overlay.appendChild(img);
+    
+    document.body.appendChild(overlay);
+    
+    // Remove after 7 seconds
+    setTimeout(() => {
+      overlay.style.animation = 'fadeOut 0.3s ease';
+      setTimeout(() => {
+        overlay.remove();
+        setIsLukaDih(false);
+      }, 300);
+    }, 7000);
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget || (e.target as HTMLElement).classList.contains('drag-handle')) {
       setIsDragging(true);
@@ -660,6 +712,15 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
                       size="sm"
                     >
                       🔔 Tung Tung Sahur {isTungSahur && '✓'}
+                    </Button>
+
+                    <Button
+                      onClick={handleLukaDih}
+                      disabled={isLukaDih}
+                      className="w-full gap-2 bg-gradient-to-r from-green-500 to-lime-500"
+                      size="sm"
+                    >
+                      💚 luka... {isLukaDih && '✓'}
                     </Button>
                   </div>
                 </div>

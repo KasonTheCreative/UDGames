@@ -89,7 +89,7 @@ export function Home() {
       <footer className="mt-32 border-t border-white/10 bg-card/20 backdrop-blur-xl py-12 relative">
         <div className="container mx-auto px-6 text-center">
           <div className="mb-6">
-            <p className="text-2xl font-black gradient-text mb-2">UD-Games</p>
+            <p className="text-2xl font-black gradient-text mb-2">ud-games</p>
             <p className="text-sm text-muted-foreground">Your Ultimate Gaming Destination</p>
           </div>
           <div className="flex items-center justify-center gap-8 mb-6">
@@ -100,7 +100,10 @@ export function Home() {
             <a href="/ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors">AI</a>
           </div>
           <p className="text-sm text-muted-foreground">
-            &copy; 2025 UD-Games. Play responsibly. Made with ⚡
+            &copy; 2025 ud-games. Play responsibly. Made with ⚡
+          </p>
+          <p className="text-sm text-muted-foreground mt-2">
+            im autistic ✌️😩
           </p>
         </div>
       </footer>
