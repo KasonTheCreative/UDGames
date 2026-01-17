@@ -324,6 +324,18 @@ export const games = [
   // Arcade Games
   {
     id: '33',
+    title: 'Google Snake',
+    description: 'Classic Google Snake game with tons of mods and customization options.',
+    image: '',
+    category: 'arcade',
+    rating: 4.9,
+    plays: '10M',
+    url: 'https://googlesnakemods.com/v/current/',
+    requiresPassword: true,
+    password: 'luka is emo'
+  },
+  {
+    id: '34',
     title: 'Glass Break',
     description: 'Smash through glass obstacles in this satisfying arcade game.',
     image: '',
@@ -333,7 +345,7 @@ export const games = [
     url: 'https://play.famobi.com/glass-break'
   },
   {
-    id: '34',
+    id: '35',
     title: 'Stars Arena',
     description: 'Collect stars and compete in the ultimate arena.',
     image: '',
@@ -343,7 +355,7 @@ export const games = [
     url: 'https://play.famobi.com/star-stars-arena'
   },
   {
-    id: '35',
+    id: '36',
     title: 'Jelly Run 2048',
     description: 'Merge jelly numbers to reach 2048 while running.',
     image: '',
@@ -353,7 +365,7 @@ export const games = [
     url: 'https://play.famobi.com/jelly-run-2048'
   },
   {
-    id: '36',
+    id: '37',
     title: 'Neon Rider',
     description: 'Race through neon-lit tracks at lightning speed.',
     image: '',
@@ -363,7 +375,7 @@ export const games = [
     url: 'https://play.famobi.com/neon-rider'
   },
   {
-    id: '37',
+    id: '38',
     title: 'Block Painter',
     description: 'Paint all blocks in this addictive puzzle arcade game.',
     image: '',
@@ -373,7 +385,7 @@ export const games = [
     url: 'https://play.famobi.com/block-painter'
   },
   {
-    id: '38',
+    id: '39',
     title: 'Ramp',
     description: 'Perform incredible stunts on massive ramps.',
     image: '',
@@ -384,7 +396,7 @@ export const games = [
   },
   // Puzzle Games
   {
-    id: '39',
+    id: '40',
     title: 'Go Escape',
     description: 'Solve puzzles and find your way to escape.',
     image: '',
@@ -394,7 +406,7 @@ export const games = [
     url: 'https://play.famobi.com/go-escape'
   },
   {
-    id: '40',
+    id: '41',
     title: 'Color Fill 3D',
     description: 'Fill the entire area with color to complete each level.',
     image: '',
@@ -404,7 +416,7 @@ export const games = [
     url: 'https://play.famobi.com/color-fill-3d'
   },
   {
-    id: '41',
+    id: '42',
     title: 'Peet Sneak',
     description: 'Sneak past guards and solve stealth puzzles.',
     image: '',
@@ -415,7 +427,7 @@ export const games = [
   },
   // Multiplayer Games
   {
-    id: '42',
+    id: '43',
     title: 'Defly.io',
     description: 'Multiplayer territorial conquest with helicopters.',
     image: '',
@@ -426,7 +438,7 @@ export const games = [
   },
   // Action Games
   {
-    id: '43',
+    id: '44',
     title: 'Soldier Attack 2',
     description: 'Defend your position against waves of enemy soldiers.',
     image: '',
@@ -436,7 +448,7 @@ export const games = [
     url: 'https://cdn.htmlgames.com/SoldierAttack2/'
   },
   {
-    id: '44',
+    id: '45',
     title: 'Airport Sniper',
     description: 'Take down targets with precision in this sniper game.',
     image: '',
@@ -446,7 +458,7 @@ export const games = [
     url: 'https://cdn.htmlgames.com/AirportSniper/'
   },
   {
-    id: '45',
+    id: '46',
     title: 'Bottle Shooter',
     description: 'Test your aim by shooting bottles in various challenges.',
     image: '',
@@ -456,7 +468,7 @@ export const games = [
     url: 'https://cdn.htmlgames.com/BottleShooter/'
   },
   {
-    id: '46',
+    id: '47',
     title: 'Jungle Sniper',
     description: 'Hunt targets in the jungle with your sniper rifle.',
     image: '',
@@ -466,7 +478,7 @@ export const games = [
     url: 'https://cdn.htmlgames.com/JungleSniper/'
   },
   {
-    id: '47',
+    id: '48',
     title: 'Saloon Shootout',
     description: 'Classic Wild West shootout in the old saloon.',
     image: '',
@@ -476,7 +488,7 @@ export const games = [
     url: 'https://cdn.htmlgames.com/SaloonShootout/'
   },
   {
-    id: '48',
+    id: '49',
     title: 'GN-Math',
     description: 'Educational math games and challenges for all skill levels.',
     image: '',
@@ -486,7 +498,7 @@ export const games = [
     url: 'https://lebro29.github.io/gn/'
   },
   {
-    id: '49',
+    id: '50',
     title: 'Online Games',
     description: 'Embeddable games for websites - vast collection of free online games.',
     image: '',
@@ -496,7 +508,7 @@ export const games = [
     url: 'https://www.onlinegames.io/t/embeddable-games-for-websites/'
   },
   {
-    id: '50',
+    id: '51',
     title: 'Game Snacks',
     description: 'Quick and fun bite-sized games that load instantly.',
     image: '',
@@ -506,7 +518,7 @@ export const games = [
     url: 'https://gamesnacks.com/'
   },
   {
-    id: '51',
+    id: '52',
     title: 'Web Proxy',
     description: 'Access any website including Google, music streaming services, and AI tools through this unblocked proxy.',
     image: '',

@@ -7,6 +7,8 @@ export interface Game {
   rating: number;
   plays: string;
   url: string;
+  requiresPassword?: boolean;
+  password?: string;
 }
 
 export type GameCategory = 'all' | 'action' | 'puzzle' | 'racing' | 'sports' | 'multiplayer' | 'arcade';

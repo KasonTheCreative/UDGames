@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ExternalLink, Maximize2, Loader2 } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Maximize2, Loader2, Lock } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
 import { games } from '../constants/games';
 
 const loadingPrompts = [
@@ -30,12 +31,24 @@ export function GamePlayer() {
   const [game, setGame] = useState<typeof games[0] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingPrompt, setLoadingPrompt] = useState('');
+  const [isPasswordRequired, setIsPasswordRequired] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [isUnlocked, setIsUnlocked] = useState(false);
 
   useEffect(() => {
     const gameId = window.location.pathname.split('/').pop();
     const foundGame = games.find(g => g.id === gameId);
     if (foundGame) {
       setGame(foundGame);
+      
+      // Check if password is required
+      if (foundGame.requiresPassword) {
+        setIsPasswordRequired(true);
+        setIsLoading(false);
+        return;
+      }
+      
       // Set random loading prompt
       const randomPrompt = loadingPrompts[Math.floor(Math.random() * loadingPrompts.length)];
       setLoadingPrompt(randomPrompt);
@@ -48,6 +61,27 @@ export function GamePlayer() {
     }
   }, []);
 
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (game && passwordInput === game.password) {
+      setIsUnlocked(true);
+      setPasswordError(false);
+      setIsPasswordRequired(false);
+      
+      // Show loading screen
+      setIsLoading(true);
+      const randomPrompt = loadingPrompts[Math.floor(Math.random() * loadingPrompts.length)];
+      setLoadingPrompt(randomPrompt);
+      
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2500);
+    } else {
+      setPasswordError(true);
+      setTimeout(() => setPasswordError(false), 1000);
+    }
+  };
+
   if (!game) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
@@ -57,6 +91,68 @@ export function GamePlayer() {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Go Back
           </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Password screen
+  if (isPasswordRequired && !isUnlocked) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl floating"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl floating" style={{ animationDelay: '2s' }}></div>
+        </div>
+        
+        <div className="relative z-10 w-full max-w-md px-6">
+          <div className="glass-card p-8 space-y-6">
+            {/* Lock Icon */}
+            <div className="text-center">
+              <div className="mb-4 flex justify-center">
+                <div className="rounded-full bg-primary/10 p-4">
+                  <Lock className={`h-16 w-16 text-primary ${passwordError ? 'animate-shake' : 'animate-pulse'}`} />
+                </div>
+              </div>
+              <h1 className="text-3xl font-bold gradient-text mb-2">{game.title}</h1>
+              <p className="text-muted-foreground">This game is password protected</p>
+            </div>
+            
+            {/* Password Form */}
+            <form onSubmit={handlePasswordSubmit} className="space-y-4">
+              <div>
+                <Input
+                  type="password"
+                  value={passwordInput}
+                  onChange={(e) => setPasswordInput(e.target.value)}
+                  placeholder="Enter password"
+                  className={`text-center text-lg ${passwordError ? 'border-destructive animate-shake' : ''}`}
+                  autoFocus
+                />
+                {passwordError && (
+                  <p className="text-xs text-destructive mt-2 text-center animate-fade-in">
+                    Incorrect password. Try again.
+                  </p>
+                )}
+              </div>
+              
+              <Button type="submit" className="w-full gap-2" size="lg">
+                <Lock className="h-5 w-5" />
+                Unlock Game
+              </Button>
+            </form>
+            
+            {/* Back Button */}
+            <Button
+              variant="ghost"
+              onClick={() => window.history.back()}
+              className="w-full gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Go Back
+            </Button>
+          </div>
         </div>
       </div>
     );
