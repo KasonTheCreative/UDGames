@@ -9,12 +9,15 @@ import { Tools } from './pages/Tools';
 import { Settings } from './pages/Settings';
 import { FollowMe } from './pages/FollowMe';
 import { AdminPanel } from './components/features/AdminPanel';
+import { RoleBadge } from './components/features/RoleBadge';
+import { useUserRole } from './hooks/useUserRole';
 
 import { initializeTheme } from './lib/themes';
 
 function App() {
   const [isSigma67, setIsSigma67] = useState(false);
   const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
+  const { role, isLoading: roleLoading } = useUserRole();
 
   // Global keyboard shortcut for admin panel (Ctrl+Shift+A)
   useEffect(() => {
@@ -35,7 +38,7 @@ function App() {
     
     // Check if sigma67 theme is active
     const checkTheme = () => {
-      const currentTheme = sessionStorage.getItem('colorTheme');
+      const currentTheme = localStorage.getItem('colorTheme');
       setIsSigma67(currentTheme === 'sigma67');
     };
     
@@ -51,6 +54,7 @@ function App() {
   if (path.startsWith('/game/')) {
     return (
       <>
+        {!roleLoading && <RoleBadge role={role} />}
         <GamePlayer />
         {isSigma67 && (
           <>
@@ -71,6 +75,8 @@ function App() {
     );
   }
   
+  const roleBadge = !roleLoading && <RoleBadge role={role} />;
+  
   const sigma67Decoration = isSigma67 ? (
     <>
       <div className="sixty-seven">67</div>
@@ -85,6 +91,7 @@ function App() {
   if (path === '/music') {
     return (
       <>
+        {roleBadge}
         <Music />
         {sigma67Decoration}
         <AdminPanel 
@@ -99,6 +106,7 @@ function App() {
   if (path === '/chat') {
     return (
       <>
+        {roleBadge}
         <ChatRoom />
         {sigma67Decoration}
         <AdminPanel 
@@ -113,6 +121,7 @@ function App() {
   if (path === '/community') {
     return (
       <>
+        {roleBadge}
         <Community />
         {sigma67Decoration}
         <AdminPanel 
@@ -127,6 +136,7 @@ function App() {
   if (path === '/ai') {
     return (
       <>
+        {roleBadge}
         <AIChat />
         {sigma67Decoration}
         <AdminPanel 
@@ -141,6 +151,7 @@ function App() {
   if (path === '/tools') {
     return (
       <>
+        {roleBadge}
         <Tools />
         {sigma67Decoration}
         <AdminPanel 
@@ -155,6 +166,7 @@ function App() {
   if (path === '/settings') {
     return (
       <>
+        {roleBadge}
         <Settings onOpenAdminPanel={() => setIsAdminPanelOpen(true)} />
         {sigma67Decoration}
         <AdminPanel 
@@ -169,6 +181,7 @@ function App() {
   if (path === '/follow') {
     return (
       <>
+        {roleBadge}
         <FollowMe />
         {sigma67Decoration}
         <AdminPanel 
@@ -182,6 +195,7 @@ function App() {
   
   return (
     <>
+      {roleBadge}
       <Home />
       {sigma67Decoration}
       <AdminPanel 

@@ -299,6 +299,7 @@ export function Settings({ onOpenAdminPanel }: SettingsProps) {
                     <SelectItem value="sunset">🌅 Solar Sunset</SelectItem>
                     <SelectItem value="purple">💜 Nebula Purple</SelectItem>
                     <SelectItem value="sigma67">😎 67 Ohio Sigma</SelectItem>
+                    <SelectItem value="googlesnake">🐍 Google Snake</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

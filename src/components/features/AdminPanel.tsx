@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { X, Lock, Maximize2, Minimize2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import { UserTracker } from './UserTracker';
 
 interface AdminPanelProps {
   isOpen: boolean;
@@ -722,6 +723,10 @@ export function AdminPanel({ isOpen, onClose, onOpen }: AdminPanelProps) {
                       💔 luka... {isLukaDih && '✓'}
                     </Button>
                   </div>
+                </div>
+
+                <div className="glass-card p-6">
+                  <UserTracker />
                 </div>
               </div>
             </div>

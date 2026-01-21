@@ -330,9 +330,7 @@ export const games = [
     category: 'arcade',
     rating: 4.9,
     plays: '10M',
-    url: 'https://googlesnakemods.com/v/current/',
-    requiresPassword: true,
-    password: 'luka is emo'
+    url: 'https://googlesnakemods.com/v/current/'
   },
   {
     id: '34',

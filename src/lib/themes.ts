@@ -1,6 +1,6 @@
 // Theme system
 
-export type ThemeColor = 'default' | 'ocean' | 'forest' | 'sunset' | 'purple' | 'sigma67';
+export type ThemeColor = 'default' | 'ocean' | 'forest' | 'sunset' | 'purple' | 'sigma67' | 'googlesnake';
 
 export interface Theme {
   name: string;
@@ -80,13 +80,24 @@ export const themes: Record<ThemeColor, Theme> = {
       background: '0 0% 5%',
       foreground: '60 100% 70%',
     }
+  },
+  googlesnake: {
+    name: 'Google Snake',
+    colors: {
+      primary: '210 100% 50%',
+      primaryForeground: '0 0% 100%',
+      secondary: '210 90% 45%',
+      accent: '200 80% 55%',
+      background: '120 60% 25%',
+      foreground: '210 100% 60%',
+    }
   }
 };
 
 
 
 export function getActiveTheme(): Theme {
-  const savedTheme = sessionStorage.getItem('colorTheme') as ThemeColor || 'default';
+  const savedTheme = localStorage.getItem('colorTheme') as ThemeColor || 'default';
   return themes[savedTheme];
 }
 
@@ -107,9 +118,9 @@ export function applyTheme(themeColor: ThemeColor | null = null) {
     root.classList.remove('sigma67-theme');
   }
 
-  // Save theme preference to sessionStorage (resets on page close)
+  // Save theme preference to localStorage (persists across sessions)
   if (themeColor) {
-    sessionStorage.setItem('colorTheme', themeColor);
+    localStorage.setItem('colorTheme', themeColor);
   }
 }
 
@@ -122,10 +133,10 @@ export function initializeTheme() {
     document.documentElement.classList.add('dark');
   }
 
-  // Apply color theme from sessionStorage
+  // Apply color theme from localStorage
   applyTheme();
 }
 
 export function getCurrentThemeColor(): ThemeColor {
-  return sessionStorage.getItem('colorTheme') as ThemeColor || 'default';
+  return localStorage.getItem('colorTheme') as ThemeColor || 'default';
 }
