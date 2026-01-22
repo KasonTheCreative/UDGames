@@ -22,12 +22,17 @@ export function Login() {
       
       // Fetch profile
       const { supabase } = await import('../lib/supabase');
-      const { data: profile } = await supabase
+      const { data: profile, error: profileError } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('id', user.id)
         .single();
 
+      if (profileError) {
+        console.error('Profile fetch error:', profileError);
+      }
+
+      // Set auth state with complete profile data
       login({
         id: user.id,
         email: user.email!,
@@ -36,11 +41,30 @@ export function Login() {
         bio: profile?.bio,
       });
 
+      toast({
+        title: 'Welcome Back!',
+        description: 'Successfully signed in.',
+      });
+
+      // Navigate to profile after successful login
       window.location.href = '/profile';
     } catch (error: any) {
+      console.error('Login error:', error);
+      
+      // Provide specific error messages
+      let errorMessage = 'Failed to sign in';
+      
+      if (error.message?.includes('Invalid login credentials')) {
+        errorMessage = 'Incorrect email or password. Please try again.';
+      } else if (error.message?.includes('Email not confirmed')) {
+        errorMessage = 'Please verify your email address first.';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: 'Login Failed',
-        description: error.message || 'Invalid email or password',
+        description: errorMessage,
         variant: 'destructive',
       });
       setLoading(false);

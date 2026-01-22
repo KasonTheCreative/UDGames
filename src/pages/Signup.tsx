@@ -54,10 +54,55 @@ export function Signup() {
         throw new Error('Failed to create user');
       }
 
+      // Wait for profile to be created by trigger and fetch it
+      const { supabase } = await import('../lib/supabase');
+      
+      // Poll for profile creation (trigger might take a moment)
+      let profile = null;
+      let attempts = 0;
+      while (!profile && attempts < 10) {
+        const { data } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+        
+        if (data) {
+          profile = data;
+          break;
+        }
+        
+        // Wait 200ms before retrying
+        await new Promise(resolve => setTimeout(resolve, 200));
+        attempts++;
+      }
+
+      // If profile still doesn't exist, create it manually
+      if (!profile) {
+        await supabase
+          .from('user_profiles')
+          .insert({
+            id: user.id,
+            email: user.email!,
+            username,
+          });
+        
+        // Fetch the newly created profile
+        const { data } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+        profile = data;
+      }
+
+      // Set auth state with complete profile data
       login({
         id: user.id,
         email: user.email!,
-        username,
+        username: profile?.username || username,
+        avatar: profile?.profile_picture_url,
+        bio: profile?.bio,
       });
 
       toast({
@@ -65,8 +110,10 @@ export function Signup() {
         description: 'Welcome to UD-Games!',
       });
 
+      // Navigate to profile after setting auth state
       window.location.href = '/profile';
     } catch (error: any) {
+      console.error('Signup error:', error);
       toast({
         title: 'Signup Failed',
         description: error.message || 'Failed to create account',

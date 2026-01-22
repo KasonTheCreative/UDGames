@@ -36,15 +36,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let mounted = true;
 
-    // Check existing session
+    // Check existing session (persists across page reloads)
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (mounted && session?.user) {
-        // Fetch user profile
-        const { data: profile } = await supabase
+        // Fetch user profile from database
+        const { data: profile, error } = await supabase
           .from('user_profiles')
           .select('*')
           .eq('id', session.user.id)
           .single();
+        
+        if (error) {
+          console.error('Error fetching profile on session restore:', error);
+        }
         
         setUser(mapSupabaseUser(session.user, profile));
       }
