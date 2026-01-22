@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Lock, User, Loader2, Sparkles, Zap, Send } from 'lucide-react';
+import { Mail, Lock, User, Loader2, Sparkles, Zap } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { authService } from '../lib/auth';
@@ -7,50 +7,13 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../hooks/use-toast';
 
 export function Signup() {
-  const [step, setStep] = useState<'email' | 'otp' | 'setup'>('email');
   const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const { toast } = useToast();
-
-  const handleSendOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      await authService.sendOtp(email);
-      toast({
-        title: 'OTP Sent!',
-        description: 'Check your email for the verification code.',
-      });
-      setStep('otp');
-    } catch (error: any) {
-      toast({
-        title: 'Error',
-        description: error.message || 'Failed to send OTP',
-        variant: 'destructive',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleVerifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (otp.length !== 4) {
-      toast({
-        title: 'Invalid OTP',
-        description: 'Please enter the 4-digit code',
-        variant: 'destructive',
-      });
-      return;
-    }
-    setStep('setup');
-  };
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,8 +48,12 @@ export function Signup() {
     setLoading(true);
 
     try {
-      const user = await authService.verifyOtpAndSetup(email, otp, password, username);
+      const user = await authService.signUp(email, password, username);
       
+      if (!user) {
+        throw new Error('Failed to create user');
+      }
+
       login({
         id: user.id,
         email: user.email!,
@@ -132,168 +99,93 @@ export function Signup() {
               </div>
             </div>
             <h1 className="text-4xl font-black gradient-text mb-2">Join UD-Games</h1>
-            <p className="text-muted-foreground">Create your account in 3 easy steps</p>
+            <p className="text-muted-foreground">Create your account and start playing</p>
           </div>
 
-          {/* Progress Steps */}
-          <div className="flex items-center justify-center gap-2">
-            <div className={`h-2 w-16 rounded-full transition-all ${step === 'email' || step === 'otp' || step === 'setup' ? 'bg-primary' : 'bg-muted'}`}></div>
-            <div className={`h-2 w-16 rounded-full transition-all ${step === 'otp' || step === 'setup' ? 'bg-primary' : 'bg-muted'}`}></div>
-            <div className={`h-2 w-16 rounded-full transition-all ${step === 'setup' ? 'bg-primary' : 'bg-muted'}`}></div>
-          </div>
+          {/* Signup Form */}
+          <form onSubmit={handleSignup} className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Mail className="h-4 w-4 text-primary" />
+                Email Address
+              </label>
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your.email@example.com"
+                required
+                className="h-12 bg-card/50 backdrop-blur-xl border-white/10"
+              />
+            </div>
 
-          {/* Step 1: Email */}
-          {step === 'email' && (
-            <form onSubmit={handleSendOtp} className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-primary" />
-                  Email Address
-                </label>
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your.email@example.com"
-                  required
-                  className="h-12 bg-card/50 backdrop-blur-xl border-white/10"
-                />
-                <p className="text-xs text-muted-foreground">
-                  We'll send you a verification code
-                </p>
-              </div>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <User className="h-4 w-4 text-primary" />
+                Username
+              </label>
+              <Input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Choose a username"
+                required
+                minLength={3}
+                className="h-12 bg-card/50 backdrop-blur-xl border-white/10"
+              />
+            </div>
 
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full h-12 text-base font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:opacity-90 transition-opacity"
-                size="lg"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="mr-2 h-5 w-5" />
-                    Send Verification Code
-                  </>
-                )}
-              </Button>
-            </form>
-          )}
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Lock className="h-4 w-4 text-primary" />
+                Password
+              </label>
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Create a password"
+                required
+                minLength={6}
+                className="h-12 bg-card/50 backdrop-blur-xl border-white/10"
+              />
+            </div>
 
-          {/* Step 2: OTP Verification */}
-          {step === 'otp' && (
-            <form onSubmit={handleVerifyOtp} className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                  <Lock className="h-4 w-4 text-primary" />
-                  Verification Code
-                </label>
-                <Input
-                  type="text"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 4))}
-                  placeholder="Enter 4-digit code"
-                  maxLength={4}
-                  required
-                  className="h-12 text-center text-2xl tracking-widest bg-card/50 backdrop-blur-xl border-white/10"
-                />
-                <p className="text-xs text-muted-foreground">
-                  Check your email: {email}
-                </p>
-              </div>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Lock className="h-4 w-4 text-primary" />
+                Confirm Password
+              </label>
+              <Input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm your password"
+                required
+                minLength={6}
+                className="h-12 bg-card/50 backdrop-blur-xl border-white/10"
+              />
+            </div>
 
-              <Button
-                type="submit"
-                className="w-full h-12 text-base font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:opacity-90 transition-opacity"
-                size="lg"
-              >
-                <Sparkles className="mr-2 h-5 w-5" />
-                Verify Code
-              </Button>
-
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => setStep('email')}
-                className="w-full"
-              >
-                Change Email
-              </Button>
-            </form>
-          )}
-
-          {/* Step 3: Setup Account */}
-          {step === 'setup' && (
-            <form onSubmit={handleSignup} className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                  <User className="h-4 w-4 text-primary" />
-                  Username
-                </label>
-                <Input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Choose a username"
-                  required
-                  className="h-12 bg-card/50 backdrop-blur-xl border-white/10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                  <Lock className="h-4 w-4 text-primary" />
-                  Password
-                </label>
-                <Input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Create a password"
-                  required
-                  className="h-12 bg-card/50 backdrop-blur-xl border-white/10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                  <Lock className="h-4 w-4 text-primary" />
-                  Confirm Password
-                </label>
-                <Input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Confirm your password"
-                  required
-                  className="h-12 bg-card/50 backdrop-blur-xl border-white/10"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full h-12 text-base font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:opacity-90 transition-opacity"
-                size="lg"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Creating Account...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="mr-2 h-5 w-5" />
-                    Create Account
-                  </>
-                )}
-              </Button>
-            </form>
-          )}
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full h-12 text-base font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:opacity-90 transition-opacity"
+              size="lg"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Creating Account...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="mr-2 h-5 w-5" />
+                  Create Account
+                </>
+              )}
+            </Button>
+          </form>
 
           {/* Divider */}
           <div className="relative">

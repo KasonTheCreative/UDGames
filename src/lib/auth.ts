@@ -2,33 +2,17 @@ import { supabase } from './supabase';
 import { AuthUser } from '../contexts/AuthContext';
 
 export class AuthService {
-  // Send OTP to email
-  async sendOtp(email: string) {
-    const { error } = await supabase.auth.signInWithOtp({
+  // Simple signup with email, password, and username
+  async signUp(email: string, password: string, username: string) {
+    const { data, error } = await supabase.auth.signUp({
       email,
-      options: { shouldCreateUser: true },
-    });
-    if (error) throw error;
-  }
-
-  // Verify OTP and set password + username
-  async verifyOtpAndSetup(email: string, token: string, password: string, username: string) {
-    // Verify OTP
-    const { data, error } = await supabase.auth.verifyOtp({
-      email,
-      token,
-      type: 'email',
-    });
-    if (error) throw error;
-
-    // Set password and username
-    const { data: updateData, error: updateError } = await supabase.auth.updateUser({
       password,
-      data: { username },
+      options: {
+        data: { username },
+      },
     });
-    if (updateError) throw updateError;
-    
-    return updateData.user;
+    if (error) throw error;
+    return data.user;
   }
 
   // Sign in with password
