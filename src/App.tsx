@@ -8,48 +8,59 @@ import { AIChat } from './pages/AIChat';
 import { Tools } from './pages/Tools';
 import { Settings } from './pages/Settings';
 import { FollowMe } from './pages/FollowMe';
+import { Login } from './pages/Login';
+import { Signup } from './pages/Signup';
+import { Profile } from './pages/Profile';
 import { AdminPanel } from './components/features/AdminPanel';
 import { RoleBadge } from './components/features/RoleBadge';
 import { useUserRole } from './hooks/useUserRole';
+import { AuthProvider } from './contexts/AuthContext';
 
 import { initializeTheme } from './lib/themes';
 
-function App() {
-  const [isSigma67, setIsSigma67] = useState(false);
-  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
-  const { role, isLoading: roleLoading } = useUserRole();
+interface AppContentProps {
+  isSigma67: boolean;
+  isAdminPanelOpen: boolean;
+  setIsAdminPanelOpen: (open: boolean) => void;
+  roleLoading: boolean;
+  role: any;
+}
 
-  // Global keyboard shortcut for admin panel (Ctrl+Shift+A)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        e.preventDefault();
-        setIsAdminPanelOpen(prev => !prev);
-      }
-    };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  // Initialize theme on app load
-  useEffect(() => {
-    initializeTheme();
-    
-    // Check if sigma67 theme is active
-    const checkTheme = () => {
-      const currentTheme = localStorage.getItem('colorTheme');
-      setIsSigma67(currentTheme === 'sigma67');
-    };
-    
-    checkTheme();
-    
-    // Listen for storage changes (when theme changes)
-    const interval = setInterval(checkTheme, 500);
-    return () => clearInterval(interval);
-  }, []);
-
+function AppContent({ isSigma67, isAdminPanelOpen, setIsAdminPanelOpen, roleLoading, role }: AppContentProps) {
   const path = window.location.pathname;
+  
+  // Auth routes - no admin panel or badges
+  if (path === '/login') {
+    return <Login />;
+  }
+  
+  if (path === '/signup') {
+    return <Signup />;
+  }
+  
+  if (path === '/profile') {
+    return (
+      <>
+        {!roleLoading && <RoleBadge role={role} />}
+        <Profile />
+        {isSigma67 && (
+          <>
+            <div className="sixty-seven">67</div>
+            <div className="sixty-seven">67</div>
+            <div className="sixty-seven">67</div>
+            <div className="sixty-seven">67</div>
+            <div className="sixty-seven">67</div>
+            <div className="sixty-seven">67</div>
+          </>
+        )}
+        <AdminPanel 
+          isOpen={isAdminPanelOpen} 
+          onClose={() => setIsAdminPanelOpen(false)}
+          onOpen={() => setIsAdminPanelOpen(true)}
+        />
+      </>
+    );
+  }
   
   if (path.startsWith('/game/')) {
     return (
@@ -204,6 +215,54 @@ function App() {
         onOpen={() => setIsAdminPanelOpen(true)}
       />
     </>
+  );
+}
+
+function App() {
+  const [isSigma67, setIsSigma67] = useState(false);
+  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
+  const { role, isLoading: roleLoading } = useUserRole();
+
+  // Global keyboard shortcut for admin panel (Ctrl+Shift+A)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        setIsAdminPanelOpen(prev => !prev);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Initialize theme on app load
+  useEffect(() => {
+    initializeTheme();
+    
+    // Check if sigma67 theme is active
+    const checkTheme = () => {
+      const currentTheme = localStorage.getItem('colorTheme');
+      setIsSigma67(currentTheme === 'sigma67');
+    };
+    
+    checkTheme();
+    
+    // Listen for storage changes (when theme changes)
+    const interval = setInterval(checkTheme, 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <AuthProvider>
+      <AppContent 
+        isSigma67={isSigma67}
+        isAdminPanelOpen={isAdminPanelOpen}
+        setIsAdminPanelOpen={setIsAdminPanelOpen}
+        roleLoading={roleLoading}
+        role={role}
+      />
+    </AuthProvider>
   );
 }
 

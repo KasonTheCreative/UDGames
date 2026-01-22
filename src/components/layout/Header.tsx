@@ -1,6 +1,7 @@
-import { Search, Zap, Settings, Sparkles } from 'lucide-react';
+import { Search, Zap, Settings, Sparkles, User } from 'lucide-react';
 import { Input } from '../ui/input';
 import { OnlineCounter } from '../features/OnlineCounter';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface HeaderProps {
   searchQuery?: string;
@@ -8,6 +9,8 @@ interface HeaderProps {
 }
 
 export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
+  const { user } = useAuth();
+
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-background/60 backdrop-blur-2xl">
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
@@ -53,6 +56,18 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
           <a href="/follow" className="nav-link">Follow</a>
 
           <div className="w-px h-6 bg-white/10 mx-2"></div>
+
+          <a href={user ? "/profile" : "/login"} className="nav-link group relative" title="Profile">
+            {user && user.avatar ? (
+              <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary/30 group-hover:border-primary transition-all">
+                <img src={user.avatar} alt={user.username} className="w-full h-full object-cover" />
+              </div>
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center border-2 border-primary/30 group-hover:border-primary transition-all">
+                <User className="h-4 w-4 text-white" />
+              </div>
+            )}
+          </a>
 
           <a href="/settings" className="nav-link" title="Settings">
             <Settings className="h-4 w-4" />
