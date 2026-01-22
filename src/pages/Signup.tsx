@@ -54,46 +54,19 @@ export function Signup() {
         throw new Error('Failed to create user');
       }
 
-      // Wait for profile to be created by trigger and fetch it
-      const { supabase } = await import('../lib/supabase');
+      // Wait a moment for the trigger to create the profile
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      // Poll for profile creation (trigger might take a moment)
-      let profile = null;
-      let attempts = 0;
-      while (!profile && attempts < 10) {
-        const { data } = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-        
-        if (data) {
-          profile = data;
-          break;
-        }
-        
-        // Wait 200ms before retrying
-        await new Promise(resolve => setTimeout(resolve, 200));
-        attempts++;
-      }
-
-      // If profile still doesn't exist, create it manually
-      if (!profile) {
-        await supabase
-          .from('user_profiles')
-          .insert({
-            id: user.id,
-            email: user.email!,
-            username,
-          });
-        
-        // Fetch the newly created profile
-        const { data } = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-        profile = data;
+      // Fetch the profile created by the trigger
+      const { supabase } = await import('../lib/supabase');
+      const { data: profile, error: profileError } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+      
+      if (profileError) {
+        console.error('Profile fetch error:', profileError);
       }
 
       // Set auth state with complete profile data
