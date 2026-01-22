@@ -54,25 +54,61 @@ export function Signup() {
         throw new Error('Failed to create user');
       }
 
-      // Wait a moment for the trigger to create the profile
-      await new Promise(resolve => setTimeout(resolve, 500));
+      console.log('User created:', user.id);
+
+      // Now sign in with the credentials to get a proper session
+      const signInUser = await authService.signInWithPassword(email, password);
       
       // Fetch the profile created by the trigger
       const { supabase } = await import('../lib/supabase');
-      const { data: profile, error: profileError } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
       
-      if (profileError) {
-        console.error('Profile fetch error:', profileError);
+      // Poll for profile creation with better error handling
+      let profile = null;
+      let attempts = 0;
+      while (!profile && attempts < 15) {
+        const { data, error } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('id', signInUser.id)
+          .maybeSingle();
+        
+        if (data) {
+          profile = data;
+          break;
+        }
+        
+        if (error && error.code !== 'PGRST116') {
+          console.error('Profile fetch error:', error);
+        }
+        
+        attempts++;
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+
+      // If profile doesn't exist after polling, create it manually
+      if (!profile) {
+        console.log('Creating profile manually...');
+        const { data: newProfile, error: insertError } = await supabase
+          .from('user_profiles')
+          .insert([{
+            id: signInUser.id,
+            username: username,
+            email: signInUser.email,
+          }])
+          .select()
+          .single();
+        
+        if (insertError) {
+          console.error('Profile creation error:', insertError);
+        } else {
+          profile = newProfile;
+        }
       }
 
       // Set auth state with complete profile data
       login({
-        id: user.id,
-        email: user.email!,
+        id: signInUser.id,
+        email: signInUser.email!,
         username: profile?.username || username,
         avatar: profile?.profile_picture_url,
         bio: profile?.bio,

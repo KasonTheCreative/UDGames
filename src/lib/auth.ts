@@ -9,9 +9,15 @@ export class AuthService {
       password,
       options: {
         data: { username },
+        emailRedirectTo: undefined, // Don't require email confirmation
       },
     });
     if (error) throw error;
+    
+    // The user is created but might not be confirmed
+    // Wait a moment for the trigger to create the profile
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
     return data.user;
   }
 
