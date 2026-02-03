@@ -291,4 +291,64 @@ export const games = [
     plays: '15M',
     url: 'https://games.crazygames.com/en_US/snake-io/index.html?v=1.350'
   },
+  {
+    id: '54',
+    title: 'Crazy Grand Prix',
+    description: 'Formula 1 racing game with career mode, practice, and multiplayer. Recruit teammates, win races, and upgrade your car!',
+    image: '',
+    category: 'racing',
+    rating: 4.8,
+    plays: '5M',
+    url: 'https://games.crazygames.com/en_US/crazy-grand-prix/index.html?v=1.350'
+  },
+  {
+    id: '55',
+    title: 'Drift Hunters',
+    description: 'Master the art of drifting with 26 customizable cars across 10 unique tracks. Tune your ride and perfect your drift!',
+    image: '',
+    category: 'racing',
+    rating: 4.9,
+    plays: '20M',
+    url: 'https://games.crazygames.com/en_US/drift-hunters/index.html?v=1.350'
+  },
+  {
+    id: '56',
+    title: 'Super Star Car',
+    description: 'Formula 1 racing with iconic circuits and car upgrades. Navigate sharp corners and climb the championship ranks!',
+    image: '',
+    category: 'racing',
+    rating: 4.7,
+    plays: '4M',
+    url: 'https://games.crazygames.com/en_US/super-star-car/index.html?v=1.350'
+  },
+  {
+    id: '57',
+    title: 'MotoCross Riders',
+    description: 'Multiplayer motocross racing game. Race against players worldwide through challenging offroad terrains!',
+    image: '',
+    category: 'racing',
+    rating: 4.6,
+    plays: '3M',
+    url: 'https://games.crazygames.com/en_US/motocross-riders/index.html?v=1.350'
+  },
+  {
+    id: '58',
+    title: 'Fighter Aircraft Pilot',
+    description: 'Realistic flight simulator with iconic aircraft. Master takeoffs, landings, and aerial combat missions!',
+    image: '',
+    category: 'action',
+    rating: 4.7,
+    plays: '6M',
+    url: 'https://games.crazygames.com/en_US/fighter-aircraft-pilot/index.html?v=1.350'
+  },
+  {
+    id: '59',
+    title: 'Trump Tower Defense',
+    description: '3D tower defense game. Build towers to protect the border from invaders and save your Trump coins!',
+    image: '',
+    category: 'action',
+    rating: 4.5,
+    plays: '2M',
+    url: 'https://games.crazygames.com/en_US/trump-tower-defense/index.html?v=1.350'
+  },
 ];
