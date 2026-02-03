@@ -169,36 +169,66 @@ export const games = [
     plays: '6M',
     url: 'https://66ez-unblocked.com/'
   },
-  // Racing Games
+  // Racing & Driving Games
   {
     id: '19',
     title: 'Polytrack',
-    description: 'Low-poly racing game with stunning visuals and exciting tracks.',
+    description: 'Classic car racing game with customizable cars and track design. Race against the clock on thrilling loops, jumps, and high-speed tracks!',
+    image: '',
+    category: 'racing',
+    rating: 4.9,
+    plays: '5M',
+    url: 'https://games.crazygames.com/en_US/polytrack/index.html?isNewUser=false&skipPrerollFirstSession=true&v=1.350'
+  },
+  {
+    id: '20',
+    title: 'Deadly Descent',
+    description: 'Speed through impossible obstacles in this intense driving simulator. Precision is key to survival!',
     image: '',
     category: 'racing',
     rating: 4.8,
     plays: '3M',
-    url: 'https://kodub.itch.io/polytrack'
+    url: 'https://games.crazygames.com/en_US/deadly-descent-bzs/index.html?v=1.350'
   },
   {
-    id: '20',
-    title: 'Circuit Racing',
-    description: 'High-speed circuit racing with realistic physics and challenging tracks.',
+    id: '21',
+    title: 'Hill Travel 3D',
+    description: 'Climb treacherous mountains with unique terrain. Tackle 15 diverse levels from snow to mud!',
     image: '',
     category: 'racing',
     rating: 4.7,
     plays: '2.5M',
-    url: 'https://circuit-racing.game-files.crazygames.com/unity/unity2020/circuit-racing.html?skipPrerollFirstSession=true&v=1.350'
+    url: 'https://games.crazygames.com/en_US/hill-travel-3d/index.html?v=1.350'
   },
   {
-    id: '21',
-    title: 'Hill Travel',
-    description: 'Navigate challenging hills and terrain in this exciting 3D driving game.',
+    id: '22',
+    title: 'Circuit Racing',
+    description: 'High-speed racing with 31 cars, 8 race classes, and multiplayer action across 15+ track layouts!',
     image: '',
     category: 'racing',
-    rating: 4.6,
-    plays: '2M',
-    url: 'https://hill-travel-3d.game-files.crazygames.com/unity/unity2020/hill-travel-3d.html?skipPrerollFirstSession=true&v=1.350'
+    rating: 4.8,
+    plays: '4M',
+    url: 'https://games.crazygames.com/en_US/circuit-racing/index.html?v=1.350'
+  },
+  {
+    id: '23',
+    title: 'Mad Town Andreas',
+    description: 'Third-person gangster game inspired by GTA. Climb the mafia ladder through crime and chaos!',
+    image: '',
+    category: 'action',
+    rating: 4.7,
+    plays: '6M',
+    url: 'https://games.crazygames.com/en_US/mad-town-andreas-mafia-storie/index.html?v=1.350'
+  },
+  {
+    id: '24',
+    title: 'Crazy Stunt Cars Multiplayer',
+    description: 'Multiplayer stunt driving with customizable cars. Race, drift, and perform outrageous stunts with friends!',
+    image: '',
+    category: 'racing',
+    rating: 4.9,
+    plays: '7M',
+    url: 'https://games.crazygames.com/en_US/crazy-stunt-cars-multiplayer/index.html?v=1.350'
   },
   // Arcade Games
   {
@@ -210,16 +240,6 @@ export const games = [
     rating: 4.9,
     plays: '10M',
     url: 'https://googlesnakemods.com/v/current/'
-  },
-  {
-    id: '38',
-    title: 'Crazy Zoo Monkey',
-    description: 'Help the crazy monkey navigate through the zoo in this fun adventure game.',
-    image: '',
-    category: 'arcade',
-    rating: 4.5,
-    plays: '1.8M',
-    url: 'https://crazy-zoo-monkey.game-files.crazygames.com/unity/unity2020/crazy-zoo-monkey.html?skipPrerollFirstSession=true&v=1.350'
   },
   {
     id: '49',
