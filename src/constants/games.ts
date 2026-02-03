@@ -281,4 +281,14 @@ export const games = [
     plays: '12M',
     url: 'https://holyublocker.org/'
   },
+  {
+    id: '53',
+    title: 'Snake.io',
+    description: 'Online IO game where you control a snake in a battlefield. Consume food to grow larger and defeat rivals!',
+    image: '',
+    category: 'arcade',
+    rating: 4.8,
+    plays: '15M',
+    url: 'https://games.crazygames.com/en_US/snake-io/index.html?v=1.350'
+  },
 ];
