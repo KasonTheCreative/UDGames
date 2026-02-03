@@ -172,13 +172,33 @@ export const games = [
   // Racing Games
   {
     id: '19',
-    title: 'Moto X3M',
-    description: 'Extreme motorbike racing with crazy stunts and obstacles.',
+    title: 'Polytrack',
+    description: 'Low-poly racing game with stunning visuals and exciting tracks.',
     image: '',
     category: 'racing',
     rating: 4.8,
-    plays: '5M',
-    url: 'https://play.famobi.com/moto-x3m-pool-party'
+    plays: '3M',
+    url: 'https://kodub.itch.io/polytrack'
+  },
+  {
+    id: '20',
+    title: 'Circuit Racing',
+    description: 'High-speed circuit racing with realistic physics and challenging tracks.',
+    image: '',
+    category: 'racing',
+    rating: 4.7,
+    plays: '2.5M',
+    url: 'https://circuit-racing.game-files.crazygames.com/unity/unity2020/circuit-racing.html?skipPrerollFirstSession=true&v=1.350'
+  },
+  {
+    id: '21',
+    title: 'Hill Travel',
+    description: 'Navigate challenging hills and terrain in this exciting 3D driving game.',
+    image: '',
+    category: 'racing',
+    rating: 4.6,
+    plays: '2M',
+    url: 'https://hill-travel-3d.game-files.crazygames.com/unity/unity2020/hill-travel-3d.html?skipPrerollFirstSession=true&v=1.350'
   },
   // Arcade Games
   {
@@ -193,13 +213,13 @@ export const games = [
   },
   {
     id: '38',
-    title: 'Block Painter',
-    description: 'Paint all blocks in this addictive puzzle arcade game.',
+    title: 'Crazy Zoo Monkey',
+    description: 'Help the crazy monkey navigate through the zoo in this fun adventure game.',
     image: '',
     category: 'arcade',
-    rating: 4.3,
-    plays: '1.5M',
-    url: 'https://play.famobi.com/block-painter'
+    rating: 4.5,
+    plays: '1.8M',
+    url: 'https://crazy-zoo-monkey.game-files.crazygames.com/unity/unity2020/crazy-zoo-monkey.html?skipPrerollFirstSession=true&v=1.350'
   },
   {
     id: '49',

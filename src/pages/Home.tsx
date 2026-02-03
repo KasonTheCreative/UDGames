@@ -1,18 +1,15 @@
 import { useState } from 'react';
 import { Header } from '../components/layout/Header';
 import { GameCard } from '../components/features/GameCard';
-import { CategoryFilter } from '../components/features/CategoryFilter';
 import { games } from '../constants/games';
 
 export function Home() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredGames = games.filter(game => {
-    const matchesCategory = selectedCategory === 'all' || game.category === selectedCategory;
     const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          game.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesSearch;
   });
 
   return (
@@ -55,14 +52,6 @@ export function Home() {
             </div>
           </div>
         </section>
-
-        {/* Category Filter */}
-        <div className="mb-10">
-          <CategoryFilter 
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-          />
-        </div>
 
         {/* Games Grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
