@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ExternalLink, Maximize2, Loader2, Lock, Download, Settings } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Maximize2, Loader2, Lock } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { games } from '../constants/games';
@@ -308,21 +308,8 @@ export function GamePlayer() {
             size="sm"
             onClick={() => window.open(game.url, '_blank')}
           >
-            <Download className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => window.open(game.url, '_blank')}
-          >
-            <Settings className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => window.open(game.url, '_blank')}
-          >
-            <ExternalLink className="h-4 w-4" />
+            <ExternalLink className="mr-2 h-4 w-4" />
+            Open in New Tab
           </Button>
           <Button
             variant="outline"
@@ -334,7 +321,8 @@ export function GamePlayer() {
               }
             }}
           >
-            <Maximize2 className="h-4 w-4" />
+            <Maximize2 className="mr-2 h-4 w-4" />
+            Fullscreen
           </Button>
         </div>
       </header>
