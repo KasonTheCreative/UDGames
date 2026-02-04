@@ -411,4 +411,44 @@ export const games = [
     plays: '30M',
     url: 'https://turbowarp.org/389464290/embed?autoplay&addons=remove-curved-stage-border,pause,gamepad'
   },
+  {
+    id: '66',
+    title: 'Bloxd.io',
+    description: 'IO adventure game with Minecraft-style visuals. Play parkour, creative sandbox, survival, and combat modes!',
+    image: '',
+    category: 'arcade',
+    rating: 4.8,
+    plays: '25M',
+    url: 'https://games.crazygames.com/en_US/bloxdhop-io/index.html?v=1.350'
+  },
+  {
+    id: '67',
+    title: 'Block Blaster',
+    description: 'Classic block puzzle game. Place blocks on the grid, clear lines, and sharpen your brain!',
+    image: '',
+    category: 'arcade',
+    rating: 4.7,
+    plays: '10M',
+    url: 'https://games.crazygames.com/en_US/block-puzzle-master/index.html?v=1.350'
+  },
+  {
+    id: '68',
+    title: 'Smash Karts',
+    description: '3D multiplayer kart battle game. Drive go-karts, pick up weapons, and blow up opponents to win!',
+    image: '',
+    category: 'racing',
+    rating: 4.9,
+    plays: '40M',
+    url: 'https://games.crazygames.com/en_US/smash-karts/index.html?v=1.350'
+  },
+  {
+    id: '69',
+    title: 'The Impossible Quiz',
+    description: 'Online quiz with 110 absurd questions requiring lateral thinking. Can you beat the impossible?',
+    image: '',
+    category: 'arcade',
+    rating: 4.8,
+    plays: '35M',
+    url: 'https://games.crazygames.com/en_US/the-impossible-quiz/index.html?v=1.350'
+  },
 ];

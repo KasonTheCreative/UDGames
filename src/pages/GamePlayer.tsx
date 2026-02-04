@@ -1,30 +1,109 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ExternalLink, Maximize2, Loader2, Lock } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Maximize2, Loader2, Lock, Download, Settings } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { games } from '../constants/games';
 
 const loadingPrompts = [
-  "67 ohio sigma (god i have no friends)",
-  "wow you found out kason made this site.",
-  "someone send help i saw a man and got hard.",
-  "Feeding the imaginary ducks.",
-  "Checking if pigeons have opinions.",
-  "Untying spaghetti from the fourth dimension.",
-  "Asking a rock for life advice.",
-  "Counting all the chairs that have ever existed.",
-  "Putting tiny hats on large thoughts.",
-  "Negotiating with a suspicious banana.",
-  "Looking for the TV remote in the freezer.",
-  "Rehearsing for a play that never happens.",
-  "Explaining taxes to a goldfish.",
-  "Making eye contact with the void.",
-  "Teaching socks how to disappear properly.",
-  "Waiting for the floor to blink first.",
-  "Arguing with a cloud named Kevin.",
-  "Checking if this text is actually real.",
-  "once i jerked of with a duck",
-  "luka is emo still"
+  "Loading… because instant gratification is overrated.",
+  "Please wait. Good things take time.",
+  "Summoning pixels…",
+  "Reticulating splines.",
+  "Still faster than real life.",
+  "Charging the hamsters.",
+  "Warming up the servers.",
+  "Just a moment… or three.",
+  "Reality is buffering.",
+  "Fetching awesomeness.",
+  "Loading… don't blink.",
+  "Almost there. Probably.",
+  "Turning coffee into code.",
+  "Assembling fun.",
+  "Spinning dramatically.",
+  "Please stand by. Or sit.",
+  "Installing magic.",
+  "Hold tight, hero.",
+  "Preparing something cool.",
+  "This won't take long. (Maybe.)",
+  "Counting to infinity.",
+  "Optimizing fun levels.",
+  "Good vibes incoming.",
+  "Making things less broken.",
+  "Checking the checklist twice.",
+  "Aligning the stars.",
+  "Loading… try not to panic.",
+  "Applying last-minute miracles.",
+  "Time flies when you're loading.",
+  "Almost ready to impress you.",
+  "Just enough time to breathe.",
+  "Downloading imagination.",
+  "Building suspense.",
+  "Reality.exe is starting.",
+  "One sec. Promise.",
+  "Still loading. Thanks for your patience.",
+  "Preparing epic moments.",
+  "This is the calm before the fun.",
+  "Polishing the pixels.",
+  "Making sure it doesn't explode.",
+  "Please enjoy this brief pause.",
+  "Spawning content.",
+  "The wait is part of the journey.",
+  "Loading… resist the urge to click.",
+  "Setting things up nicely.",
+  "Summoning dragons. (Metaphorically.)",
+  "Checking for bugs. Literally and figuratively.",
+  "Just enough time to stretch.",
+  "Powering up.",
+  "Loading screen quote #50. Meta, right?",
+  "Almost done. For real this time.",
+  "Buffering like a pro.",
+  "Preparing something delightful.",
+  "Turning zeros into ones.",
+  "Don't worry, it's working.",
+  "If this takes long, blame the internet.",
+  "Waiting builds character.",
+  "Loading… please hum elevator music.",
+  "Making it worth the wait.",
+  "One moment while we do our thing.",
+  "The fun is loading.",
+  "Taking a deep digital breath.",
+  "Just a tiny pause in the universe.",
+  "Making sure it looks good.",
+  "Almost ready to go.",
+  "Reality is loading.",
+  "Stand by for greatness.",
+  "Spinning circles intensify.",
+  "Getting all the bits in place.",
+  "The suspense is intentional.",
+  "Loading… please remain awesome.",
+  "Good things are loading.",
+  "We're getting there. Together.",
+  "Progress is happening. Somewhere.",
+  "Waking up the code.",
+  "Please wait while magic happens.",
+  "Loading screen quotes are hard.",
+  "This is not frozen. Probably.",
+  "Almost finished. Don't leave now.",
+  "Just one more second.",
+  "Preheating the fun.",
+  "Getting ready to start.",
+  "Loading… thanks for sticking around.",
+  "Making pixels behave.",
+  "You're still here? Nice.",
+  "This is the price of greatness.",
+  "Loading in progress. Progress not guaranteed.",
+  "Something cool is coming.",
+  "A moment of anticipation.",
+  "Almost unlocked.",
+  "Please enjoy this brief nothingness.",
+  "Loading… try smiling.",
+  "Getting everything just right.",
+  "Not broken. Just thinking.",
+  "Stay tuned.",
+  "Loading screen quotes are almost done.",
+  "Thanks for waiting. Seriously.",
+  "Ready when you are.",
+  "Last checks in progress."
 ];
 
 export function GamePlayer() {
@@ -229,8 +308,21 @@ export function GamePlayer() {
             size="sm"
             onClick={() => window.open(game.url, '_blank')}
           >
-            <ExternalLink className="mr-2 h-4 w-4" />
-            Open in New Tab
+            <Download className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.open(game.url, '_blank')}
+          >
+            <Settings className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.open(game.url, '_blank')}
+          >
+            <ExternalLink className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -242,8 +334,7 @@ export function GamePlayer() {
               }
             }}
           >
-            <Maximize2 className="mr-2 h-4 w-4" />
-            Fullscreen
+            <Maximize2 className="h-4 w-4" />
           </Button>
         </div>
       </header>
