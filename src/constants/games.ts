@@ -182,33 +182,33 @@ export const games = [
   },
   {
     id: '20',
-    title: 'Deadly Descent',
-    description: 'Speed through impossible obstacles in this intense driving simulator. Precision is key to survival!',
-    image: '',
-    category: 'racing',
-    rating: 4.8,
-    plays: '3M',
-    url: 'https://games.crazygames.com/en_US/deadly-descent-bzs/index.html?v=1.350'
-  },
-  {
-    id: '21',
-    title: 'Hill Travel 3D',
-    description: 'Climb treacherous mountains with unique terrain. Tackle 15 diverse levels from snow to mud!',
-    image: '',
-    category: 'racing',
-    rating: 4.7,
-    plays: '2.5M',
-    url: 'https://games.crazygames.com/en_US/hill-travel-3d/index.html?v=1.350'
-  },
-  {
-    id: '22',
-    title: 'Circuit Racing',
-    description: 'High-speed racing with 31 cars, 8 race classes, and multiplayer action across 15+ track layouts!',
+    title: 'Driver Club',
+    description: 'High-speed highway racing. Dodge traffic, overtake vehicles, and dominate the leaderboard!',
     image: '',
     category: 'racing',
     rating: 4.8,
     plays: '4M',
-    url: 'https://games.crazygames.com/en_US/circuit-racing/index.html?v=1.350'
+    url: 'https://games.crazygames.com/en_US/driver-club-highway-racing/index.html?v=1.350'
+  },
+  {
+    id: '21',
+    title: 'Highway Racer',
+    description: '3D racing game with 4 modes. Speed down highways, dodge cars, and earn gold to upgrade!',
+    image: '',
+    category: 'racing',
+    rating: 4.7,
+    plays: '5M',
+    url: 'https://games.crazygames.com/en_US/highway-racer/index.html?v=1.350'
+  },
+  {
+    id: '22',
+    title: 'Racing Unlimited',
+    description: 'Choose from 15 turbocharged cars and race through neon cities, mountains, and beaches!',
+    image: '',
+    category: 'racing',
+    rating: 4.8,
+    plays: '3M',
+    url: 'https://games.crazygames.com/en_US/racing-unlimited/index.html?v=1.350'
   },
   {
     id: '23',
@@ -350,5 +350,65 @@ export const games = [
     rating: 4.5,
     plays: '2M',
     url: 'https://games.crazygames.com/en_US/trump-tower-defense/index.html?v=1.350'
+  },
+  {
+    id: '60',
+    title: '2 Minute Football',
+    description: 'Fast-paced football game. Take control as quarterback and lead your team to the championship!',
+    image: '',
+    category: 'sports',
+    rating: 4.7,
+    plays: '3M',
+    url: 'https://games.crazygames.com/en_US/qb-legend/index.html?v=1.350'
+  },
+  {
+    id: '61',
+    title: 'Baseball',
+    description: 'Experience the great American pastime. Hit home runs and win in arcade or story mode!',
+    image: '',
+    category: 'sports',
+    rating: 4.6,
+    plays: '2M',
+    url: 'https://games.crazygames.com/en_US/baseball/index.html?v=1.350'
+  },
+  {
+    id: '62',
+    title: 'Gunblood',
+    description: 'Western shootout game. Draw your weapon and prove you are the fastest gunslinger in town!',
+    image: '',
+    category: 'action',
+    rating: 4.8,
+    plays: '8M',
+    url: 'https://games.crazygames.com/en_US/gunblood/index.html?v=1.350'
+  },
+  {
+    id: '63',
+    title: 'Happy Wheels',
+    description: 'Ragdoll physics game. Navigate deadly obstacles with quirky characters in this legendary browser game!',
+    image: '',
+    category: 'arcade',
+    rating: 4.9,
+    plays: '50M',
+    url: 'https://games.crazygames.com/en_US/happy-wheels/index.html?v=1.350'
+  },
+  {
+    id: '64',
+    title: 'Short Life',
+    description: 'Physics platform game. Guide your ragdoll through 16 bloody and deadly levels!',
+    image: '',
+    category: 'arcade',
+    rating: 4.8,
+    plays: '12M',
+    url: 'https://games.crazygames.com/en_US/short-life/index.html?v=1.350'
+  },
+  {
+    id: '65',
+    title: 'Getting Over It',
+    description: 'Climbing game that will test your patience. Use a hammer to climb a mountain with a man in a pot!',
+    image: '',
+    category: 'arcade',
+    rating: 4.9,
+    plays: '30M',
+    url: 'https://turbowarp.org/389464290/embed?autoplay&addons=remove-curved-stage-border,pause,gamepad'
   },
 ];

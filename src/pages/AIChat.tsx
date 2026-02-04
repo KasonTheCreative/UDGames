@@ -11,6 +11,9 @@ interface Message {
 }
 
 export function AIChat() {
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
@@ -117,6 +120,61 @@ export function AIChat() {
       handleSend();
     }
   };
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === '6241') {
+      setIsUnlocked(true);
+      setPasswordError(false);
+    } else {
+      setPasswordError(true);
+      setPassword('');
+    }
+  };
+
+  // Show password screen if not unlocked
+  if (!isUnlocked) {
+    return (
+      <div className="flex min-h-screen flex-col bg-background">
+        <Header />
+        
+        <div className="container mx-auto flex flex-1 items-center justify-center px-4">
+          <Card className="w-full max-w-md p-8">
+            <div className="text-center mb-6">
+              <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 mb-4">
+                <Bot className="h-8 w-8 text-primary" />
+              </div>
+              <h2 className="text-2xl font-bold mb-2">AI Chat Locked</h2>
+              <p className="text-muted-foreground">Enter the password to access AI chat</p>
+            </div>
+            
+            <form onSubmit={handlePasswordSubmit} className="space-y-4">
+              <div>
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setPasswordError(false);
+                  }}
+                  placeholder="Enter password"
+                  className={passwordError ? 'border-red-500' : ''}
+                  autoFocus
+                />
+                {passwordError && (
+                  <p className="text-sm text-red-500 mt-2">Incorrect password. Try again.</p>
+                )}
+              </div>
+              
+              <Button type="submit" className="w-full">
+                Unlock AI Chat
+              </Button>
+            </form>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-background">

@@ -46,7 +46,6 @@ export function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
             <Sparkles className="h-4 w-4 inline-block mr-1 opacity-0 group-hover:opacity-100 transition-opacity" />
             Games
           </a>
-          <a href="/tools" className="nav-link">Tools</a>
           <a href="/music" className="nav-link">Music</a>
           <a href="/chat" className="nav-link">Chat</a>
           <a href="/community" className="nav-link">Community</a>
