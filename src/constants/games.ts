@@ -271,16 +271,7 @@ export const games = [
     plays: '6M',
     url: 'https://gamesnacks.com/'
   },
-  {
-    id: '52',
-    title: 'Web Proxy',
-    description: 'Access any website including Google, music streaming services, and AI tools through this unblocked proxy.',
-    image: '',
-    category: 'websites',
-    rating: 4.8,
-    plays: '12M',
-    url: 'https://holyublocker.org/'
-  },
+
   {
     id: '53',
     title: 'Snake.io',
