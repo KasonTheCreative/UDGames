@@ -451,4 +451,54 @@ export const games = [
     plays: '35M',
     url: 'https://games.crazygames.com/en_US/the-impossible-quiz/index.html?v=1.350'
   },
+  {
+    id: '70',
+    title: 'Veck.io',
+    description: '3D multiplayer FPS shooter with 40+ weapons. Compete in arcade mode, team battles, or Gun Game challenges!',
+    image: '',
+    category: 'action',
+    rating: 4.8,
+    plays: '18M',
+    url: 'https://games.crazygames.com/en_US/veck-io/index.html?v=1.350'
+  },
+  {
+    id: '71',
+    title: 'War the Knights',
+    description: 'Intense medieval battle strategy game. Command knight armies, breach enemy lines, and capture flags to win!',
+    image: '',
+    category: 'action',
+    rating: 4.7,
+    plays: '5M',
+    url: 'https://games.crazygames.com/en_US/war-the-knights/index.html?v=1.350'
+  },
+  {
+    id: '72',
+    title: 'Funny Battle Simulator',
+    description: 'Strategy battle simulator with unique units. Command infantry, archers, Cyclops, Spartans, and Zeus himself!',
+    image: '',
+    category: 'action',
+    rating: 4.6,
+    plays: '4M',
+    url: 'https://games.crazygames.com/en_US/funny-battle-simulator/index.html?v=1.350'
+  },
+  {
+    id: '73',
+    title: 'Short Life 2',
+    description: 'Sequel to Short Life! Control your ragdoll through 20 bloody levels. Avoid deadly traps and unlock new characters!',
+    image: '',
+    category: 'arcade',
+    rating: 4.8,
+    plays: '15M',
+    url: 'https://games.crazygames.com/en_US/short-life-2/index.html?v=1.350'
+  },
+  {
+    id: '74',
+    title: 'Hobo',
+    description: 'Classic fighting game. Play as a homeless fighter using disgusting combo moves to battle through the city!',
+    image: '',
+    category: 'action',
+    rating: 4.7,
+    plays: '10M',
+    url: 'https://games.crazygames.com/en_US/hobo/index.html?v=1.350'
+  },
 ];
