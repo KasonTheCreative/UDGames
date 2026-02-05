@@ -552,4 +552,14 @@ export const games = [
     plays: '1B',
     url: '/drake-maye.html'
   },
+  {
+    id: '81',
+    title: '3D Flight Simulator',
+    description: 'Ultra-realistic flying simulator. Jump behind the controls of different aircraft and master the art of flying!',
+    image: '',
+    category: 'action',
+    rating: 4.8,
+    plays: '8M',
+    url: 'https://games.crazygames.com/en_US/3d-flight-simulator/index.html?v=1.350'
+  },
 ];

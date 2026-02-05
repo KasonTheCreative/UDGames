@@ -1,4 +1,4 @@
-import { Play, Star, Zap } from 'lucide-react';
+import { Play, Zap } from 'lucide-react';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import type { Game } from '../../types/game';
@@ -46,11 +46,7 @@ export function GameCard({ game, index }: GameCardProps) {
             {game.category}
           </div>
 
-          {/* Rating Badge */}
-          <div className="absolute left-3 top-3 rounded-xl bg-black/50 backdrop-blur-md px-2 py-1.5 flex items-center gap-1 border border-white/20">
-            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-            <span className="text-xs font-bold text-white">{game.rating}</span>
-          </div>
+
         </div>
 
         {/* Game Info */}
@@ -66,11 +62,7 @@ export function GameCard({ game, index }: GameCardProps) {
           </p>
           
           {/* Stats */}
-          <div className="flex items-center justify-between text-xs">
-            <div className="flex items-center gap-1 text-muted-foreground">
-              <Users className="h-3 w-3" />
-              <span>{game.plays} plays</span>
-            </div>
+          <div className="flex items-center justify-end text-xs">
             <div className="px-2 py-1 rounded-lg bg-primary/10 text-primary font-semibold">
               Free
             </div>
