@@ -453,23 +453,23 @@ export const games = [
   },
   {
     id: '70',
-    title: 'Veck.io',
-    description: '3D multiplayer FPS shooter with 40+ weapons. Compete in arcade mode, team battles, or Gun Game challenges!',
+    title: 'We Become What We Behold',
+    description: 'A 5-minute game about news cycles and vicious cycles. Capture moments with your camera and watch society react!',
     image: '',
-    category: 'action',
-    rating: 4.8,
-    plays: '18M',
-    url: 'https://games.crazygames.com/en_US/veck-io/index.html?v=1.350'
+    category: 'arcade',
+    rating: 4.9,
+    plays: '25M',
+    url: 'https://games.crazygames.com/en_US/we-become-what-we-behold/index.html?v=1.350'
   },
   {
     id: '71',
-    title: 'War the Knights',
-    description: 'Intense medieval battle strategy game. Command knight armies, breach enemy lines, and capture flags to win!',
+    title: 'One Chance',
+    description: 'Adventure game where you have 6 days to save the world or spend time with family. You only get one chance!',
     image: '',
-    category: 'action',
-    rating: 4.7,
-    plays: '5M',
-    url: 'https://games.crazygames.com/en_US/war-the-knights/index.html?v=1.350'
+    category: 'arcade',
+    rating: 4.8,
+    plays: '15M',
+    url: 'https://games.crazygames.com/en_US/one-chance/index.html?v=1.350'
   },
   {
     id: '72',
@@ -500,5 +500,65 @@ export const games = [
     rating: 4.7,
     plays: '10M',
     url: 'https://games.crazygames.com/en_US/hobo/index.html?v=1.350'
+  },
+  {
+    id: '75',
+    title: 'RCC City Racing',
+    description: 'Street racing with 6 game modes including police chases and destruction derbies. Multiplayer racing mayhem!',
+    image: '',
+    category: 'racing',
+    rating: 4.7,
+    plays: '8M',
+    url: 'https://games.crazygames.com/en_US/rcc-city-racing/index.html?v=1.350'
+  },
+  {
+    id: '76',
+    title: 'POLICE Chase Simulator',
+    description: 'Drive your police car and chase down bad guys trying to escape. High-speed pursuit action!',
+    image: '',
+    category: 'racing',
+    rating: 4.6,
+    plays: '6M',
+    url: 'https://games.crazygames.com/en_US/police-chase-simulator/index.html?v=1.350'
+  },
+  {
+    id: '77',
+    title: 'City Classic Car Driving: 131',
+    description: 'Test your driving skills with races, pursuits, drift events. Customize your car and become the drift king!',
+    image: '',
+    category: 'racing',
+    rating: 4.7,
+    plays: '7M',
+    url: 'https://games.crazygames.com/en_US/city-classic-car-driving-131/index.html?v=1.350'
+  },
+  {
+    id: '78',
+    title: 'Plane Chase',
+    description: 'Chase planes in your souped-up car and leap into them mid-flight! Absurd obstacles and daring jumps await!',
+    image: '',
+    category: 'racing',
+    rating: 4.5,
+    plays: '4M',
+    url: 'https://games.crazygames.com/en_US/plane-chase/index.html?v=1.350'
+  },
+  {
+    id: '79',
+    title: 'Cow Defender',
+    description: '3D driving and shooting game. Save your cows from alien invaders using your armed truck!',
+    image: '',
+    category: 'action',
+    rating: 4.6,
+    plays: '5M',
+    url: 'https://games.crazygames.com/en_US/cow-defender/index.html?v=1.350'
+  },
+  {
+    id: '80',
+    title: 'i luv drake maye',
+    description: 'A tribute to greatness. Experience the legend.',
+    image: '',
+    category: 'arcade',
+    rating: 5.0,
+    plays: '1B',
+    url: '/drake-maye.html'
   },
 ];
