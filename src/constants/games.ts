@@ -410,7 +410,7 @@ export const games = [
     category: 'arcade',
     rating: 4.8,
     plays: '25M',
-    url: 'https://games.crazygames.com/en_US/bloxdhop-io/index.html?v=1.350'
+    url: 'https://bloxd.io/'
   },
   {
     id: '67',
@@ -561,5 +561,65 @@ export const games = [
     rating: 4.8,
     plays: '8M',
     url: 'https://games.crazygames.com/en_US/3d-flight-simulator/index.html?v=1.350'
+  },
+  {
+    id: '82',
+    title: 'Jump to Sky',
+    description: 'First-person parkour game. Jump in the sky, test your agility, and reach the finish gate over an abyss!',
+    image: '',
+    category: 'arcade',
+    rating: 4.7,
+    plays: '5M',
+    url: 'https://games.crazygames.com/en_US/jump-to-sky-3d-parcour/index.html?v=1.350'
+  },
+  {
+    id: '83',
+    title: 'Obby Plane Power Challenge',
+    description: 'Fly as far as possible by buying new planes, unlocking aerial trails, and collecting energy. Compete on leaderboards!',
+    image: '',
+    category: 'arcade',
+    rating: 4.6,
+    plays: '4M',
+    url: 'https://games.crazygames.com/en_US/obby-plane-power-challenge-fly/index.html?v=1.350'
+  },
+  {
+    id: '84',
+    title: 'Stunt Horizon',
+    description: 'Extreme car stunt challenge with massive ramps and gravity-defying tricks. Perform flips and conquer stunt tracks!',
+    image: '',
+    category: 'racing',
+    rating: 4.8,
+    plays: '6M',
+    url: 'https://games.crazygames.com/en_US/stunt-horizon/index.html?v=1.350'
+  },
+  {
+    id: '85',
+    title: 'Madness Cars Destroy',
+    description: 'High-octane car game with 6 modes. Push rivals off platforms, dodge bombs, and survive spinning cubes!',
+    image: '',
+    category: 'racing',
+    rating: 4.7,
+    plays: '7M',
+    url: 'https://games.crazygames.com/en_US/madness-car-destroy/index.html?v=1.350'
+  },
+  {
+    id: '86',
+    title: 'Mega Ramp Car Stunt',
+    description: 'Adrenaline-pumping stunt racing with mega ramps and springboards. High-speed racing and spectacular stunts!',
+    image: '',
+    category: 'racing',
+    rating: 4.8,
+    plays: '8M',
+    url: 'https://games.crazygames.com/en_US/mega-ramp-car-stunt/index.html?v=1.350'
+  },
+  {
+    id: '87',
+    title: 'Crash & Stunt',
+    description: 'Realistic car crash simulator with tuning options and ragdoll jumps. Complete missions and explore tracks!',
+    image: '',
+    category: 'racing',
+    rating: 4.7,
+    plays: '6M',
+    url: 'https://games.crazygames.com/en_US/crash-stunt/index.html?v=1.350'
   },
 ];
