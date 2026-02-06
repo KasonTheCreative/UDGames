@@ -14,13 +14,11 @@ const getSessionId = () => {
 export function useOnlineUsers() {
   const [onlineCount, setOnlineCount] = useState<number>(0);
   const sessionId = getSessionId();
-  
-  // Add a base count to always show at least 10+ users
-  const BASE_USER_COUNT = Math.floor(Math.random() * 6) + 10; // Random 10-15 base users
 
   useEffect(() => {
     let heartbeatInterval: NodeJS.Timeout;
     let pollInterval: NodeJS.Timeout;
+    let cleanupInterval: NodeJS.Timeout;
 
     // Register this session as online
     const registerSession = async () => {
@@ -48,27 +46,34 @@ export function useOnlineUsers() {
       }
     };
 
-    // Fetch online user count
-    const fetchOnlineCount = async () => {
+    // Clean up stale sessions (older than 1 minute)
+    const cleanupStale = async () => {
       try {
-        // First, cleanup stale sessions
-        const twoMinutesAgo = new Date(Date.now() - 2 * 60 * 1000).toISOString();
+        const oneMinuteAgo = new Date(Date.now() - 60000).toISOString();
         await supabase
           .from('online_users')
           .delete()
-          .lt('last_active', twoMinutesAgo);
+          .lt('last_active', oneMinuteAgo);
+      } catch (error) {
+        console.error('Error cleaning up stale sessions:', error);
+      }
+    };
 
-        // Then get count of active sessions (updated in last 2 minutes)
+    // Fetch online user count - only count users active in last 30 seconds
+    const fetchOnlineCount = async () => {
+      try {
+        const thirtySecondsAgo = new Date(Date.now() - 30000).toISOString();
+        
         const { count, error } = await supabase
           .from('online_users')
           .select('*', { count: 'exact', head: true })
-          .gte('last_active', twoMinutesAgo);
+          .gte('last_active', thirtySecondsAgo);
 
         if (error) {
           console.error('Error fetching online count:', error);
         } else {
-          // Add base count to actual count for display
-          setOnlineCount((count || 0) + BASE_USER_COUNT);
+          // Show actual real user count
+          setOnlineCount(count || 0);
         }
       } catch (error) {
         console.error('Error in fetchOnlineCount:', error);
@@ -90,15 +95,32 @@ export function useOnlineUsers() {
     // Initialize
     registerSession();
     fetchOnlineCount();
+    cleanupStale();
 
     // Set up intervals
-    heartbeatInterval = setInterval(updateHeartbeat, 30000); // Update every 30 seconds
-    pollInterval = setInterval(fetchOnlineCount, 10000); // Poll every 10 seconds
+    heartbeatInterval = setInterval(updateHeartbeat, 10000); // Update every 10 seconds
+    pollInterval = setInterval(fetchOnlineCount, 3000); // Poll every 3 seconds for real-time feel
+    cleanupInterval = setInterval(cleanupStale, 30000); // Cleanup every 30 seconds
+
+    // Handle page visibility to pause/resume heartbeat
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Page hidden - remove session
+        removeSession();
+      } else {
+        // Page visible - re-register
+        registerSession();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     // Cleanup on unmount
     return () => {
       clearInterval(heartbeatInterval);
       clearInterval(pollInterval);
+      clearInterval(cleanupInterval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       removeSession();
     };
   }, [sessionId]);

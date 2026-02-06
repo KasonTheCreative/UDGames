@@ -14,9 +14,9 @@ export function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 bg-gradient-to-b from-slate-50 via-white to-slate-50 relative overflow-hidden">
       {/* Cyber Grid Background */}
-      <div className="fixed inset-0 pointer-events-none opacity-20">
+      <div className="fixed inset-0 pointer-events-none opacity-20 dark:opacity-20 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `
             linear-gradient(to right, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
@@ -28,9 +28,9 @@ export function Home() {
 
       {/* Glowing Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] floating"></div>
-        <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[120px] floating" style={{ animationDelay: '3s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[100px] floating" style={{ animationDelay: '6s' }}></div>
+        <div className="absolute top-20 left-10 w-[600px] h-[600px] bg-blue-500/20 dark:bg-blue-500/20 bg-blue-500/10 rounded-full blur-[120px] floating"></div>
+        <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-purple-500/20 dark:bg-purple-500/20 bg-purple-500/10 rounded-full blur-[120px] floating" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-cyan-500/10 dark:bg-cyan-500/10 bg-cyan-500/5 rounded-full blur-[100px] floating" style={{ animationDelay: '6s' }}></div>
       </div>
 
       <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
@@ -58,32 +58,32 @@ export function Home() {
 
             {/* Feature Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 p-6 hover:border-blue-500/50 transition-all duration-300">
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 dark:from-blue-500/10 dark:to-blue-600/5 from-blue-50 to-blue-100 border border-blue-500/20 dark:border-blue-500/20 border-blue-200 p-6 hover:border-blue-500/50 transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <Gamepad2 className="h-10 w-10 text-blue-400 mb-3" />
-                <p className="text-3xl font-black text-white mb-1">{games.length}+</p>
-                <p className="text-sm text-slate-400 uppercase tracking-wider font-medium">Games</p>
+                <Gamepad2 className="h-10 w-10 text-blue-400 dark:text-blue-400 text-blue-600 mb-3" />
+                <p className="text-3xl font-black text-white dark:text-white text-slate-900 mb-1">{games.length}+</p>
+                <p className="text-sm text-slate-400 dark:text-slate-400 text-slate-600 uppercase tracking-wider font-medium">Games</p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 p-6 hover:border-purple-500/50 transition-all duration-300">
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-600/5 dark:from-purple-500/10 dark:to-purple-600/5 from-purple-50 to-purple-100 border border-purple-500/20 dark:border-purple-500/20 border-purple-200 p-6 hover:border-purple-500/50 transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <Zap className="h-10 w-10 text-purple-400 mb-3" />
-                <p className="text-3xl font-black text-white mb-1">100%</p>
-                <p className="text-sm text-slate-400 uppercase tracking-wider font-medium">Free</p>
+                <Zap className="h-10 w-10 text-purple-400 dark:text-purple-400 text-purple-600 mb-3" />
+                <p className="text-3xl font-black text-white dark:text-white text-slate-900 mb-1">100%</p>
+                <p className="text-sm text-slate-400 dark:text-slate-400 text-slate-600 uppercase tracking-wider font-medium">Free</p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-pink-500/10 to-pink-600/5 border border-pink-500/20 p-6 hover:border-pink-500/50 transition-all duration-300">
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-pink-500/10 to-pink-600/5 dark:from-pink-500/10 dark:to-pink-600/5 from-pink-50 to-pink-100 border border-pink-500/20 dark:border-pink-500/20 border-pink-200 p-6 hover:border-pink-500/50 transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <Trophy className="h-10 w-10 text-pink-400 mb-3" />
-                <p className="text-3xl font-black text-white mb-1">No Ads</p>
-                <p className="text-sm text-slate-400 uppercase tracking-wider font-medium">Pure Gaming</p>
+                <Trophy className="h-10 w-10 text-pink-400 dark:text-pink-400 text-pink-600 mb-3" />
+                <p className="text-3xl font-black text-white dark:text-white text-slate-900 mb-1">No Ads</p>
+                <p className="text-sm text-slate-400 dark:text-slate-400 text-slate-600 uppercase tracking-wider font-medium">Pure Gaming</p>
               </div>
 
-              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border border-cyan-500/20 p-6 hover:border-cyan-500/50 transition-all duration-300">
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 dark:from-cyan-500/10 dark:to-cyan-600/5 from-cyan-50 to-cyan-100 border border-cyan-500/20 dark:border-cyan-500/20 border-cyan-200 p-6 hover:border-cyan-500/50 transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <Users className="h-10 w-10 text-cyan-400 mb-3" />
-                <p className="text-3xl font-black text-white mb-1">∞</p>
-                <p className="text-sm text-slate-400 uppercase tracking-wider font-medium">Players</p>
+                <Users className="h-10 w-10 text-cyan-400 dark:text-cyan-400 text-cyan-600 mb-3" />
+                <p className="text-3xl font-black text-white dark:text-white text-slate-900 mb-1">∞</p>
+                <p className="text-sm text-slate-400 dark:text-slate-400 text-slate-600 uppercase tracking-wider font-medium">Players</p>
               </div>
             </div>
           </div>
@@ -94,9 +94,9 @@ export function Home() {
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-2">
               <div className="h-8 w-1 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
-              <h2 className="text-4xl font-black text-white">All Games</h2>
+              <h2 className="text-4xl font-black text-white dark:text-white text-slate-900">All Games</h2>
             </div>
-            <p className="text-slate-400 ml-7">Choose your adventure. No limits, no restrictions.</p>
+            <p className="text-slate-400 dark:text-slate-400 text-slate-600 ml-7">Choose your adventure. No limits, no restrictions.</p>
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -127,7 +127,7 @@ export function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-32 border-t border-slate-800 bg-slate-950/50 backdrop-blur-xl py-16 relative">
+      <footer className="mt-32 border-t border-slate-800 dark:border-slate-800 border-slate-200 bg-slate-950/50 dark:bg-slate-950/50 bg-white/50 backdrop-blur-xl py-16 relative">
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"></div>
         <div className="container mx-auto px-6 relative">
           <div className="max-w-4xl mx-auto text-center">
