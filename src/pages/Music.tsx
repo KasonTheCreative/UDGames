@@ -17,13 +17,6 @@ const musicSites: MusicSite[] = [
     description: 'Discover and stream trending audio content',
     url: 'https://audio.com/feed',
     icon: Headphones
-  },
-  {
-    id: '2',
-    title: 'Radio Garden',
-    description: 'Listen to live radio stations from around the world',
-    url: 'https://radio.garden/',
-    icon: Radio
   }
 ];
 

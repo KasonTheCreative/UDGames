@@ -410,7 +410,7 @@ export const games = [
     category: 'arcade',
     rating: 4.8,
     plays: '25M',
-    url: 'https://bloxd.io/'
+    url: 'https://bloxdio2.com/'
   },
   {
     id: '67',
@@ -572,26 +572,7 @@ export const games = [
     plays: '5M',
     url: 'https://games.crazygames.com/en_US/jump-to-sky-3d-parcour/index.html?v=1.350'
   },
-  {
-    id: '83',
-    title: 'Obby Plane Power Challenge',
-    description: 'Fly as far as possible by buying new planes, unlocking aerial trails, and collecting energy. Compete on leaderboards!',
-    image: '',
-    category: 'arcade',
-    rating: 4.6,
-    plays: '4M',
-    url: 'https://games.crazygames.com/en_US/obby-plane-power-challenge-fly/index.html?v=1.350'
-  },
-  {
-    id: '84',
-    title: 'Stunt Horizon',
-    description: 'Extreme car stunt challenge with massive ramps and gravity-defying tricks. Perform flips and conquer stunt tracks!',
-    image: '',
-    category: 'racing',
-    rating: 4.8,
-    plays: '6M',
-    url: 'https://games.crazygames.com/en_US/stunt-horizon/index.html?v=1.350'
-  },
+
   {
     id: '85',
     title: 'Madness Cars Destroy',

@@ -123,7 +123,7 @@ export function AIChat() {
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === '6241') {
+    if (password === '6421') {
       setIsUnlocked(true);
       setPasswordError(false);
     } else {

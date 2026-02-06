@@ -25,9 +25,13 @@ interface SettingsProps {
 }
 
 export function Settings({ onOpenAdminPanel }: SettingsProps) {
-  const [theme, setTheme] = useState<'light' | 'dark'>(
-    document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-  );
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      return savedTheme;
+    }
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  });
   const [colorTheme, setColorTheme] = useState<ThemeColor>(
     getCurrentThemeColor()
   );
@@ -36,6 +40,12 @@ export function Settings({ onOpenAdminPanel }: SettingsProps) {
 
   useEffect(() => {
     // Initialize theme on component mount
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else if (savedTheme === 'light') {
+      document.documentElement.classList.remove('dark');
+    }
     applyTheme();
   }, []);
 
@@ -126,7 +136,7 @@ export function Settings({ onOpenAdminPanel }: SettingsProps) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UD-Math - Saved Copy</title>
+  <title>UD-Games - Saved Copy</title>
   <style>
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -146,6 +156,20 @@ export function Settings({ onOpenAdminPanel }: SettingsProps) {
       font-size: 3rem;
       margin-bottom: 1rem;
     }
+    .open-btn {
+      display: inline-block;
+      background: linear-gradient(to right, #a855f7, #3b82f6);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 1rem;
+      transition: opacity 0.2s;
+    }
+    .open-btn:hover {
+      opacity: 0.8;
+    }
     .info {
       background: #1a1a1a;
       padding: 1.5rem;
@@ -164,12 +188,14 @@ export function Settings({ onOpenAdminPanel }: SettingsProps) {
 </head>
 <body>
   <div class="container">
-    <h1>UD-Math Backup</h1>
+    <h1>UD-Games Backup</h1>
+    <a href="https://udgs.netlify.app" class="open-btn" target="_blank">🚀 Open Latest Version</a>
     <div class="info">
       <h2>🎮 Site Information</h2>
-      <p><strong>Original URL:</strong> ${window.location.origin}</p>
+      <p><strong>Current URL:</strong> ${window.location.origin}</p>
+      <p><strong>Latest Version:</strong> <a href="https://udgs.netlify.app" target="_blank">https://udgs.netlify.app</a></p>
       <p><strong>Saved Date:</strong> ${new Date().toLocaleString()}</p>
-      <p><strong>Status:</strong> This is an offline backup of UD-Math</p>
+      <p><strong>Status:</strong> This is an offline backup of UD-Games</p>
     </div>
     
     <div class="info">
@@ -215,7 +241,7 @@ export function Settings({ onOpenAdminPanel }: SettingsProps) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `UD-Math-Backup-${new Date().toISOString().split('T')[0]}.html`;
+    a.download = `UD-Games-Backup-${new Date().toISOString().split('T')[0]}.html`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
